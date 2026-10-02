@@ -1,5 +1,6 @@
 /* oxlint-disable @typescript-eslint/no-misused-promises */
 /* oxlint-disable import/order */
+import "./utils/slowBufferShim"; // must come before any module that loads jsonwebtoken
 import "zod/compile";
 import "./logging/tracer"; // must come before importing any instrumented module
 
