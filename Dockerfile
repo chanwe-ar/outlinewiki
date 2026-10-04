@@ -32,6 +32,14 @@ COPY --from=base --chown=nodejs:nodejs $APP_PATH/public ./public
 COPY --from=base --chown=nodejs:nodejs $APP_PATH/.sequelizerc ./.sequelizerc
 COPY --from=base --chown=nodejs:nodejs $APP_PATH/node_modules ./node_modules
 COPY --from=base --chown=nodejs:nodejs $APP_PATH/package.json ./package.json
+
+# Restore the `buffer.SlowBuffer` export removed in Node.js 25, which some
+# transitive dependencies still read at module load time. Preloaded rather than
+# imported from application code because `build/` is copied from the base image
+# above. See docker/slow-buffer-shim.cjs.
+COPY --chown=nodejs:nodejs docker/slow-buffer-shim.cjs ./docker/slow-buffer-shim.cjs
+ENV NODE_OPTIONS="--require=$APP_PATH/docker/slow-buffer-shim.cjs"
+
 # Install wget to healthcheck the server
 RUN  apt-get update \
     && apt-get install -y wget \
