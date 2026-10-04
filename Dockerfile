@@ -41,7 +41,7 @@ COPY --chown=nodejs:nodejs docker/slow-buffer-shim.cjs ./docker/slow-buffer-shim
 ENV NODE_OPTIONS="--require=$APP_PATH/docker/slow-buffer-shim.cjs"
 
 # Enable Identity's required S256 PKCE in the legacy precompiled OIDC plugin.
-COPY --chown=nodejs:nodejs docker/oidc-pkce-store.cjs docker/enable-oidc-pkce.cjs ./docker/
+COPY --chown=nodejs:nodejs docker/oidc-pkce-store.cjs docker/oidc-identity-profile.cjs docker/enable-oidc-pkce.cjs ./docker/
 RUN node docker/enable-oidc-pkce.cjs
 
 # Install wget to healthcheck the server
