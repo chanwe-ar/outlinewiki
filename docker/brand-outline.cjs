@@ -174,6 +174,21 @@ index = replaceOnce(
 );
 fs.writeFileSync(indexPath, index);
 
+// Outline's React app re-adds `<link rel="shortcut icon">` with the server's
+// default on every page, and browsers use the last icon link. That default is
+// /images/favicon-32.png, cached for 7 days, so browsers kept Outline's own
+// icon after it was replaced. Point it at the hashed copy instead.
+const appRoutePath = path.resolve("build/server/routes/app.js");
+fs.writeFileSync(
+  appRoutePath,
+  replaceOnce(
+    fs.readFileSync(appRoutePath, "utf8"),
+    'shortcutIcon = `${_env.default.CDN_URL || ""}/images/favicon-32.png`',
+    `shortcutIcon = \`\${_env.default.CDN_URL || ""}/static/${brandName}/favicon-32.png\``,
+    "default favicon"
+  )
+);
+
 const manifestPath = path.join(APP, "manifest.webmanifest");
 const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 Object.assign(manifest, {
