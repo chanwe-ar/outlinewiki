@@ -122,7 +122,10 @@ sw = replaceOnce(
   "service worker"
 );
 fs.writeFileSync(swPath, sw);
-fs.renameSync(assetsDir, path.join(APP, assetsName));
+// Copy rather than rename: overlayfs cannot rename a directory that comes
+// from a lower image layer (EXDEV).
+fs.cpSync(assetsDir, path.join(APP, assetsName), { recursive: true });
+fs.rmSync(assetsDir, { recursive: true, force: true });
 fs.symlinkSync(assetsName, assetsDir);
 
 // 3. Brand files under a content-hashed directory.
