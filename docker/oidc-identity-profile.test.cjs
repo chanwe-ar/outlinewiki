@@ -102,3 +102,59 @@ test("checks the access-token hash when present", () => {
     verifyIdentityProfile(sign({ at_hash }), "different-token", configuration)
   );
 });
+
+const wikiConfiguration = {
+  ...configuration,
+  resourceAudience: "wiki-api",
+  requiredScope: "wiki:access",
+};
+const grant = {
+  sub: claims.sub,
+  iss: configuration.issuer,
+  aud: wikiConfiguration.resourceAudience,
+  client_id: configuration.audience,
+  scope: "wiki:access",
+  exp: Math.floor(Date.now() / 1000) + 300,
+};
+const signGrant = (changes = {}, key = privateKey) =>
+  jwt.sign({ ...grant, ...changes }, key, {
+    algorithm: "RS256",
+    keyid: "test-key",
+  });
+
+test("accepts an access token that grants the Wiki to the same person", () => {
+  assert.equal(
+    verifyIdentityProfile(sign(), signGrant(), wikiConfiguration).sub,
+    claims.sub
+  );
+});
+
+for (const [name, changes] of Object.entries({
+  scope: { scope: "apps:catalog:read" },
+  emptyScope: { scope: "" },
+  subject: { sub: "someone-else" },
+  audience: { aud: "other-api" },
+  issuer: { iss: "https://attacker.example.com" },
+  client: { client_id: "other-client" },
+  expiry: { exp: 1 },
+})) {
+  test(`rejects an access token with a wrong ${name}`, () => {
+    assert.throws(() =>
+      verifyIdentityProfile(sign(), signGrant(changes), wikiConfiguration)
+    );
+  });
+}
+
+test("rejects a forged or opaque access token", () => {
+  const other = crypto.generateKeyPairSync("rsa", { modulusLength: 2048 });
+  assert.throws(() =>
+    verifyIdentityProfile(
+      sign(),
+      signGrant({}, other.privateKey),
+      wikiConfiguration
+    )
+  );
+  assert.throws(() =>
+    verifyIdentityProfile(sign(), "access-token", wikiConfiguration)
+  );
+});
