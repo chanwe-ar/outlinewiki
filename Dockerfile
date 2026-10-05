@@ -1,62 +1,16 @@
-ARG APP_PATH=/opt/outline
-ARG BASE_IMAGE=outlinewiki/outline-base
-FROM ${BASE_IMAGE} AS base
+# Use the released application, rather than outline-base:latest's stale build.
+FROM outlinewiki/outline:1.10.1
 
-ARG APP_PATH
-WORKDIR $APP_PATH
+USER root
+WORKDIR /opt/outline
 
-# ---
-FROM node:26.3.0-slim AS runner
-
-LABEL org.opencontainers.image.source="https://github.com/outline/outline"
-
-ARG APP_PATH
-WORKDIR $APP_PATH
-ENV NODE_ENV=production
-
-# Limit glibc malloc arenas, which default to 8 per CPU. Each arena can hold
-# onto 64MB of virtual memory and freed allocations, which inflates resident
-# memory in multi-threaded Node.js processes for no performance benefit here.
-ENV MALLOC_ARENA_MAX=2
-
-# Create a non-root user compatible with Debian and BusyBox based images
-RUN addgroup --gid 1001 nodejs && \
-    adduser --uid 1001 --ingroup nodejs nodejs && \
-    mkdir -p /var/lib/outline && \
-    chown -R nodejs:nodejs /var/lib/outline && \
-    chown -R nodejs:nodejs $APP_PATH
-
-COPY --from=base --chown=nodejs:nodejs $APP_PATH/build ./build
-COPY --from=base --chown=nodejs:nodejs $APP_PATH/server ./server
-COPY --from=base --chown=nodejs:nodejs $APP_PATH/public ./public
-COPY --from=base --chown=nodejs:nodejs $APP_PATH/.sequelizerc ./.sequelizerc
-COPY --from=base --chown=nodejs:nodejs $APP_PATH/node_modules ./node_modules
-COPY --from=base --chown=nodejs:nodejs $APP_PATH/package.json ./package.json
-
-# Restore the `buffer.SlowBuffer` export removed in Node.js 25, which some
-# transitive dependencies still read at module load time. Preloaded rather than
-# imported from application code because `build/` is copied from the base image
-# above. See docker/slow-buffer-shim.cjs.
+# Preserve compatibility with dependencies that still reference SlowBuffer.
 COPY --chown=nodejs:nodejs docker/slow-buffer-shim.cjs ./docker/slow-buffer-shim.cjs
-ENV NODE_OPTIONS="--require=$APP_PATH/docker/slow-buffer-shim.cjs"
+ENV NODE_OPTIONS="--require=/opt/outline/docker/slow-buffer-shim.cjs"
 
-# Enable Identity's required S256 PKCE in the legacy precompiled OIDC plugin.
-COPY --chown=nodejs:nodejs docker/oidc-pkce-store.cjs docker/oidc-identity-profile.cjs docker/enable-oidc-pkce.cjs ./docker/
-RUN node docker/enable-oidc-pkce.cjs
-
-# Install wget to healthcheck the server
-RUN  apt-get update \
-    && apt-get install -y wget \
-    && rm -rf /var/lib/apt/lists/*
-
-ENV FILE_STORAGE_LOCAL_ROOT_DIR=/var/lib/outline/data
-RUN mkdir -p "$FILE_STORAGE_LOCAL_ROOT_DIR" && \
-    chown -R nodejs:nodejs "$FILE_STORAGE_LOCAL_ROOT_DIR" && \
-    chmod 1777 "$FILE_STORAGE_LOCAL_ROOT_DIR"
+# Chanwe Identity requires PKCE and returns profile claims in its ID token.
+# Outline's native state store now handles PKCE; retain strict ID-token checks.
+COPY --chown=nodejs:nodejs docker/oidc-identity-profile.cjs docker/configure-outline-release.cjs ./docker/
+RUN node docker/configure-outline-release.cjs
 
 USER nodejs
-
-HEALTHCHECK --interval=1m CMD wget -qO- "http://localhost:${PORT:-3000}/_health" | grep -q "OK" || exit 1
-
-EXPOSE 3000
-CMD ["node", "build/server/index.js"]
