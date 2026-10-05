@@ -93,8 +93,31 @@ for (const [before, after] of THEME) {
 }
 fs.writeFileSync(themePath, theme);
 
-// 2. Move the assets so every browser fetches the patched bundle.
-const assetsName = `assets-cw${shortHash(theme)}`;
+// No "Log out": sessions belong to CHANWE Identity and end from Espacios, like
+// every CHANWE app. Outline hides an action whose `visible` returns false, in
+// the account menu and the command bar alike.
+const LOGOUT_ACTION = "analyticsName:`Log out`,";
+const navigationFiles = fs
+  .readdirSync(assetsDir)
+  .filter((name) => name.endsWith(".js"))
+  .filter((name) =>
+    fs.readFileSync(path.join(assetsDir, name), "utf8").includes(LOGOUT_ACTION)
+  );
+if (navigationFiles.length !== 1) {
+  throw new Error(`Expected one Outline logout action, found ${navigationFiles.length}`);
+}
+const navigationPath = path.join(assetsDir, navigationFiles[0]);
+const navigation = replaceOnce(
+  fs.readFileSync(navigationPath, "utf8"),
+  LOGOUT_ACTION,
+  `${LOGOUT_ACTION}visible:()=>!1,`,
+  "logout action"
+);
+fs.writeFileSync(navigationPath, navigation);
+
+// 2. Move the assets so every browser fetches the patched bundle. The name
+// covers every patched chunk, so a change to any of them gets a new URL.
+const assetsName = `assets-cw${shortHash(theme, navigation)}`;
 const files = new Set(fs.readdirSync(assetsDir));
 // Only rewrite references to files that exist, so prose or URLs that merely
 // contain "assets/" are left alone.
