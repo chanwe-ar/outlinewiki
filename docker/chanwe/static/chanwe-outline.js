@@ -62,6 +62,15 @@
   // the stream of mutations typing in the editor produces.
   var restyle = true;
 
+  // Outline marks no theme in the page; the shell styles need to know whether
+  // it is light (rail and white bar) or dark. Read from the body's background.
+  function markTheme() {
+    var match = getComputedStyle(document.body).backgroundColor.match(/\d+/g);
+    if (!match) return;
+    var light = (+match[0] * 299 + +match[1] * 587 + +match[2] * 114) / 1000 > 128;
+    document.documentElement.setAttribute("data-cw-theme", light ? "light" : "dark");
+  }
+
   function placeEspacios() {
     var sidebar = document.getElementById("sidebar");
     if (!sidebar) return;
@@ -75,6 +84,7 @@
     if (link.nextSibling !== home) home.parentNode.insertBefore(link, home);
     if (!restyle) return;
     restyle = false;
+    markTheme();
     var search = sidebar.querySelector('a[href="/search"]');
     var reference = [search, home].filter(function (element) {
       return element && element.getAttribute("aria-current") !== "page";

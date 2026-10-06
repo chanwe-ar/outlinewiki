@@ -112,3 +112,69 @@ h2,
 @media (prefers-reduced-motion: reduce) {
   .cw-espacios { transition: none; }
 }
+
+/* ── App shell (light theme) ───────────────────────────────────────────
+   The brandbook's shell (chanwe-brandbook src/app-shell.css): the theme patch
+   in brand-outline.cjs turns the sidebar into the dark rail (ink-light, white
+   at 65%, active in orange); these rules finish it and give the header the
+   56px white bar with its scan line. Outline's buttons and behaviour stay as
+   they are. chanwe-outline.js marks the theme on <html>. */
+
+html[data-cw-theme="light"] #sidebar {
+  color: rgba(255, 255, 255, 0.65);
+  border-right: 0;
+}
+
+/* Active item: orange (from the theme), its text and icon white. */
+html[data-cw-theme="light"] #sidebar a[aria-current="page"],
+html[data-cw-theme="light"] #sidebar a[aria-current="page"] * {
+  color: #fff !important;
+}
+
+/* Section labels ("Colecciones", "Destacados"…): the rail's small caps. */
+html[data-cw-theme="light"] #sidebar h3,
+html[data-cw-theme="light"] #sidebar [role="heading"] {
+  color: rgba(255, 255, 255, 0.35) !important;
+  font: 600 10px/1 var(--cw-font-display, Satoshi, sans-serif) !important;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Workspace and account buttons at the rail's ends, in white. */
+html[data-cw-theme="light"] #sidebar [role="button"],
+html[data-cw-theme="light"] #sidebar button {
+  color: rgba(255, 255, 255, 0.75);
+}
+html[data-cw-theme="light"] #sidebar [role="button"] *,
+html[data-cw-theme="light"] #sidebar button * {
+  color: inherit;
+}
+
+/* Espacios row on the rail. */
+html[data-cw-theme="light"] #sidebar .cw-espacios:hover,
+html[data-cw-theme="light"] #sidebar .cw-espacios:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Header: Outline's sticky 56px bar, solid white with a rule and the
+   brand's scan line under it. */
+html[data-cw-theme="light"] [role="main"] > div > div:first-child[class] {
+  background: #fff !important;
+  backdrop-filter: none !important;
+  border-bottom: 1px solid #E2E8F0;
+}
+html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: min(68vw, 760px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, #FD3810 45%, transparent) 12%, #FD3810 50%, color-mix(in srgb, #FD3810 45%, transparent) 88%, transparent 100%);
+  animation: cw-scan-line 5.5s cubic-bezier(.45, .05, .55, .95) infinite;
+  pointer-events: none;
+}
+@keyframes cw-scan-line { from { transform: translateX(-100%); } to { transform: translateX(100vw); } }
+@media (prefers-reduced-motion: reduce) {
+  html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after { animation: none; }
+}
