@@ -51,7 +51,7 @@ const THEME = [
   ["accent:`#0366d6`", "accent:`#FD3810`"], // primary
   [
     "fontFamily:`-apple-system, BlinkMacSystemFont, Inter, 'Segoe UI', Roboto, Oxygen, sans-serif`",
-    "fontFamily:`Satoshi, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif`",
+    "fontFamily:`Satoshi, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif`",
   ],
   [
     "fontFamilyMono:`'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace`",
@@ -186,6 +186,7 @@ index = replaceOnce(
   `{head-tags}
     <link rel="icon" type="image/svg+xml" href="${brand}/wiki.svg" />
     <link rel="preload" href="${brand}/fonts/Satoshi-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="${brand}/tokens.css" />
     <link rel="stylesheet" href="${brand}/chanwe-outline.css" />
     <script defer src="${brand}/chanwe-outline.js"></script>`,
   "index.html head"

@@ -26,12 +26,11 @@
 @font-face { font-family: "JetBrains Mono"; src: url("./fonts/JetBrainsMono-LatinExt.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap;
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 
-/* The tokens app-veil.js reads; values from brand/tokens/tokens.css. */
+/* The brand tokens (--cw-brand-*) come from tokens.css, a synced copy of
+   chanwe-brandbook/brand/tokens/tokens.css that brand-outline.cjs links before
+   this file. Only the wiki's own aliases live here. */
 :root {
-  --cw-brand-primary: #FD3810;
-  --cw-brand-paper: #F8FAFC;
-  --cw-brand-fg-muted: #475569;
-  --cw-font-display: "Schibsted Grotesk", Satoshi, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --cw-font-display: var(--cw-brand-font-display);
 }
 
 /* Headings in the brand display face: page headings, editor headings and the
@@ -45,7 +44,7 @@ h2,
 }
 
 ::selection {
-  background: color-mix(in srgb, #FD3810 22%, transparent);
+  background: color-mix(in srgb, var(--cw-brand-primary) 22%, transparent);
 }
 
 /* "Volver a CHANWE Espacios": the first row of the sidebar's navigation,
@@ -70,7 +69,7 @@ h2,
 }
 
 .cw-espacios:focus-visible {
-  outline: 2px solid #FD3810;
+  outline: 2px solid var(--cw-brand-primary);
   outline-offset: -2px;
 }
 
@@ -128,7 +127,7 @@ html[data-cw-theme="light"] #sidebar {
 /* Active item: orange (from the theme), its text and icon white. */
 html[data-cw-theme="light"] #sidebar a[aria-current="page"],
 html[data-cw-theme="light"] #sidebar a[aria-current="page"] * {
-  color: #fff !important;
+  color: var(--cw-brand-pure-white) !important;
 }
 
 /* Section labels ("Colecciones", "Destacados"…): the rail's small caps. */
@@ -159,9 +158,9 @@ html[data-cw-theme="light"] #sidebar .cw-espacios:focus-visible {
 /* Header: Outline's sticky 56px bar, solid white with a rule and the
    brand's scan line under it. */
 html[data-cw-theme="light"] [role="main"] > div > div:first-child[class] {
-  background: #fff !important;
+  background: var(--cw-brand-pure-white) !important;
   backdrop-filter: none !important;
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: 1px solid var(--cw-brand-rule);
 }
 html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after {
   content: "";
@@ -170,7 +169,7 @@ html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after 
   bottom: -1px;
   width: min(68vw, 760px);
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, #FD3810 45%, transparent) 12%, #FD3810 50%, color-mix(in srgb, #FD3810 45%, transparent) 88%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--cw-brand-primary) 45%, transparent) 12%, var(--cw-brand-primary) 50%, color-mix(in srgb, var(--cw-brand-primary) 45%, transparent) 88%, transparent 100%);
   animation: cw-scan-line 5.5s cubic-bezier(.45, .05, .55, .95) infinite;
   pointer-events: none;
 }
@@ -181,7 +180,7 @@ html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after 
 
 /* Rail: the brand's dot field over ink-light. */
 html[data-cw-theme="light"] #sidebar {
-  background-image: radial-gradient(rgba(248, 250, 252, 0.055) 1px, transparent 1px);
+  background-image: radial-gradient(color-mix(in srgb, var(--cw-brand-paper) 5.5%, transparent) 1px, transparent 1px);
   background-size: 16px 16px;
 }
 
@@ -201,5 +200,5 @@ html[data-cw-theme="light"] #sidebar {
   mask: url("./chanwe-logo.svg") left center / contain no-repeat;
 }
 html[data-cw-theme="light"] #sidebar .cw-team {
-  color: #fff;
+  color: var(--cw-brand-pure-white);
 }
