@@ -29,3 +29,24 @@ for (const [before, after] of replacements) {
   source = source.replace(before, after);
 }
 fs.writeFileSync(target, source);
+
+// Signing out of Espacios signs out of every CHANWE app: Espacios calls each
+// app's local sign-out after CHANWE Identity has ended its session. Outline's
+// own sign-out is a CSRF-protected API call, so this adds a plain GET that
+// only clears this browser's session cookie (no Identity round trip).
+const authRouter = path.resolve("build/server/routes/auth/index.js");
+const signoutAnchor = 'router.get("/redirect", ';
+let authSource = fs.readFileSync(authRouter, "utf8");
+if (authSource.split(signoutAnchor).length !== 2) {
+  throw new Error(`Unexpected Outline 1.10.1 auth router: ${signoutAnchor}`);
+}
+authSource = authSource.replace(
+  signoutAnchor,
+  `router.get("/chanwe.signout", (ctx) => {
+    ctx.cookies.set("accessToken", "", { sameSite: "lax", expires: new Date(0) });
+    ctx.set("Cache-Control", "no-store");
+    ctx.status = 204;
+});
+${signoutAnchor}`
+);
+fs.writeFileSync(authRouter, authSource);
