@@ -92,6 +92,16 @@
     if (reference) matchRow(link, reference);
   }
 
+  // The workspace button at the top of the rail shows the CHANWE wordmark
+  // instead of the team's icon and name (CSS draws it); its menu stays.
+  function markTeam() {
+    var sidebar = document.getElementById("sidebar");
+    var team = sidebar && sidebar.querySelector('button[role="button"]');
+    if (!team || team.classList.contains("cw-team")) return;
+    team.classList.add("cw-team");
+    team.setAttribute("aria-label", "CHANWE");
+  }
+
   // The veil waits for a usable screen: the sidebar, or any control (login,
   // error and share pages have no sidebar).
   var veilDone = false;
@@ -108,6 +118,7 @@
   function update() {
     scheduled = false;
     placeEspacios();
+    markTeam();
     liftVeil();
   }
   function schedule() {

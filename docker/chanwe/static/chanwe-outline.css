@@ -178,3 +178,28 @@ html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after 
 @media (prefers-reduced-motion: reduce) {
   html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after { animation: none; }
 }
+
+/* Rail: the brand's dot field over ink-light. */
+html[data-cw-theme="light"] #sidebar {
+  background-image: radial-gradient(rgba(248, 250, 252, 0.055) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Rail head: the white CHANWE wordmark in place of the team's icon and name
+   (chanwe-outline.js marks the button); the button and its menu stay. */
+#sidebar .cw-team > * {
+  display: none;
+}
+#sidebar .cw-team::before {
+  content: "";
+  display: block;
+  width: 88px;
+  height: 18px;
+  margin-inline-start: 4px;
+  background: currentColor;
+  -webkit-mask: url("./chanwe-logo.svg") left center / contain no-repeat;
+  mask: url("./chanwe-logo.svg") left center / contain no-repeat;
+}
+html[data-cw-theme="light"] #sidebar .cw-team {
+  color: #fff;
+}
