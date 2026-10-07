@@ -67,6 +67,8 @@
   --cw-brand-chart-cyan-soft: #B6FFF8;
   --cw-brand-chart-magenta: #EB03F2;
   --cw-brand-chart-gray: #71706C;
+  --cw-brand-violet: #7C3AED;
+  --cw-brand-violet-soft: #EFE7FD;
   --cw-brand-primary-hsl: 10 98% 53%;
   --cw-brand-primary-text-hsl: 10 98% 53%;
   --cw-brand-primary-active-hsl: 10 98% 53%;
@@ -133,6 +135,8 @@
   --cw-brand-chart-cyan-soft-hsl: 174 100% 86%;
   --cw-brand-chart-magenta-hsl: 298 98% 48%;
   --cw-brand-chart-gray-hsl: 48 2% 43%;
+  --cw-brand-violet-hsl: 262 83% 58%;
+  --cw-brand-violet-soft-hsl: 262 85% 95%;
   --cw-brand-role-foreground: #475569;
   --cw-brand-role-background: #F8FAFC;
   --cw-brand-role-primary: #FD3810;
