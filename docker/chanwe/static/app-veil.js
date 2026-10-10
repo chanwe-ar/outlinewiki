@@ -26,7 +26,7 @@
   if (window.cwVeil) return;
   var script = document.currentScript;
   // Configuration sits on the script tag; an app that cannot set attributes
-  // there (Nextcloud adds its scripts itself) uses <meta name="cw-veil-icon">,
+  // there (PDrive adds its scripts itself) uses <meta name="cw-veil-icon">,
   // "cw-veil-label" and "cw-veil-wait" instead.
   var meta = function (name) { var element = document.querySelector('meta[name="cw-veil-' + name + '"]'); return element ? element.getAttribute("content") : undefined; };
   var dataset = script && script.dataset ? script.dataset : {};
