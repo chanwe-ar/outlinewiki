@@ -4,7 +4,7 @@ const assert = require("node:assert/strict");
 const { test } = require("node:test");
 const crypto = require("node:crypto");
 const jwt = require("jsonwebtoken");
-const { verifyIdentityProfile } = require("./oidc-identity-profile.cjs");
+const { identityProfile, verifyIdentityProfile } = require("./oidc-identity-profile.cjs");
 
 const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
   modulusLength: 2048,
@@ -157,4 +157,33 @@ test("rejects a forged or opaque access token", () => {
   assert.throws(() =>
     verifyIdentityProfile(sign(), "access-token", wikiConfiguration)
   );
+});
+
+test("fetches the signing keys from the issuer itself, whatever jwks_uri discovery publishes", async () => {
+  const requested = [];
+  const original = { fetch: globalThis.fetch, env: { ...process.env } };
+  Object.assign(process.env, {
+    OIDC_ISSUER_URL: configuration.issuer,
+    OIDC_CLIENT_ID: configuration.audience,
+    OIDC_ACCESS_TOKEN_AUDIENCE: wikiConfiguration.resourceAudience,
+    OIDC_REQUIRED_SCOPE: wikiConfiguration.requiredScope,
+  });
+  globalThis.fetch = async (url) => {
+    requested.push(String(url));
+    const body = String(url).endsWith("/.well-known/openid-configuration")
+      // Identity publishes a direct origin for AWS STS: never followed.
+      ? { issuer: configuration.issuer, jwks_uri: "https://direct-origin.example.net/jwks" }
+      : { keys: configuration.keys };
+    return new Response(JSON.stringify(body), { status: 200 });
+  };
+  try {
+    assert.equal((await identityProfile(sign(), signGrant())).sub, claims.sub);
+    assert.deepEqual(requested, [
+      `${configuration.issuer}/.well-known/openid-configuration`,
+      `${configuration.issuer}/jwks`,
+    ]);
+  } finally {
+    globalThis.fetch = original.fetch;
+    process.env = original.env;
+  }
 });

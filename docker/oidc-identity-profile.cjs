@@ -160,13 +160,12 @@ async function identityProfile(token, accessToken) {
       throw new Error("Unable to load Identity discovery metadata");
     }
     const metadata = await response.json();
-    if (
-      metadata.issuer !== issuer ||
-      new URL(metadata.jwks_uri).origin !== new URL(issuer).origin
-    ) {
+    if (metadata.issuer !== issuer) {
       throw new Error("Identity discovery metadata does not match the issuer");
     }
-    const keysResponse = await fetch(metadata.jwks_uri, {
+    // The keys always come from the issuer's own origin. Identity may publish another jwks_uri (a direct origin for
+    // AWS STS); trusting it would mean trusting a second host, so it is not followed.
+    const keysResponse = await fetch(`${issuer.replace(/\/$/, "")}/jwks`, {
       signal: AbortSignal.timeout(10000),
       redirect: "error",
     });
