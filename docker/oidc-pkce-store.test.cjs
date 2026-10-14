@@ -75,6 +75,16 @@ test("rejects tampered and missing cookies", () => {
   assertRejected(f);
 });
 
+test("rejects a cookie whose GCM tag was truncated to 4 bytes", () => {
+  const f = fixture();
+  save(f);
+  for (const [key, value] of f.cookies) {
+    const data = Buffer.from(value, "base64url");
+    f.cookies.set(key, data.subarray(0, 12 + 4).toString("base64url"));
+  }
+  assertRejected(f);
+});
+
 test("rejects cookies encrypted with another secret", () => {
   const f = fixture();
   save(f);

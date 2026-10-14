@@ -4,6 +4,8 @@ const crypto = require("node:crypto");
 
 const cookieName = "__Host-outline-oidc-pkce";
 const lifetime = 10 * 60 * 1000;
+// Node would otherwise accept a GCM tag as short as 4 bytes, making a forgery far easier.
+const tagLength = 16;
 const cookieOptions = {
   httpOnly: true,
   secure: true,
@@ -53,7 +55,9 @@ class OIDCPKCEStore {
         return callback(error);
       }
       const iv = crypto.randomBytes(12);
-      const cipher = crypto.createCipheriv("aes-256-gcm", this.encryptionKey, iv);
+      const cipher = crypto.createCipheriv("aes-256-gcm", this.encryptionKey, iv, {
+        authTagLength: tagLength,
+      });
       const payload = JSON.stringify({
         token,
         verifier,
@@ -89,15 +93,20 @@ class OIDCPKCEStore {
       let payload;
       try {
         const data = Buffer.from(cookie || "", "base64url");
+        const tag = data.subarray(12, 12 + tagLength);
+        if (tag.length !== tagLength) {
+          throw new Error("Invalid PKCE state");
+        }
         const decipher = crypto.createDecipheriv(
           "aes-256-gcm",
           this.encryptionKey,
-          data.subarray(0, 12)
+          data.subarray(0, 12),
+          { authTagLength: tagLength }
         );
-        decipher.setAuthTag(data.subarray(12, 28));
+        decipher.setAuthTag(tag);
         payload = JSON.parse(
           Buffer.concat([
-            decipher.update(data.subarray(28)),
+            decipher.update(data.subarray(12 + tagLength)),
             decipher.final(),
           ]).toString("utf8")
         );
