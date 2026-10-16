@@ -28,3 +28,12 @@ data/*
 !.yarn/releases
 .yarn/releases
 !.yarn/sdks
+
+# Local environment files; only the reviewed example templates are versioned.
+.env
+.env.*
+!/.env.build.example
+!/.env.ci.example
+!/.env.example
+!/.env.sample
+!/.env.system.example
