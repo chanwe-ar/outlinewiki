@@ -1,5 +1,5 @@
 # Use the released application, rather than outline-base:latest's stale build.
-FROM outlinewiki/outline:1.10.1
+FROM outlinewiki/outline:1.11.0
 
 USER root
 WORKDIR /opt/outline
