@@ -149,6 +149,22 @@ html[data-cw-theme="light"] #sidebar button * {
   color: inherit;
 }
 
+/* The title field that appears in the rail when a page or a collection is created or renamed (Outline's
+   EditableTitle input): ink text on paper, so it is never white on white; the focus ring in orange. */
+#sidebar input,
+#sidebar [contenteditable="true"] {
+  color: var(--cw-brand-ink) !important;
+  background: var(--cw-brand-paper) !important;
+  caret-color: var(--cw-brand-primary);
+  border-radius: 4px;
+  padding: 0 6px;
+}
+#sidebar input:focus-visible,
+#sidebar [contenteditable="true"]:focus-visible {
+  outline: 2px solid var(--cw-brand-primary);
+  outline-offset: 1px;
+}
+
 /* Espacios row on the rail. */
 html[data-cw-theme="light"] #sidebar .cw-espacios:hover,
 html[data-cw-theme="light"] #sidebar .cw-espacios:focus-visible {
