@@ -4,8 +4,8 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const version = JSON.parse(fs.readFileSync("package.json", "utf8")).version;
-if (version !== "1.11.0") {
-  throw new Error(`Expected Outline 1.11.0, received ${version}`);
+if (version !== "1.12.0") {
+  throw new Error(`Expected Outline 1.12.0, received ${version}`);
 }
 
 // Assert exact matches so an upstream change cannot silently bypass the adapter.
@@ -24,7 +24,7 @@ const replacements = [
 ];
 for (const [before, after] of replacements) {
   if (source.split(before).length !== 2) {
-    throw new Error(`Unexpected Outline 1.11.0 OIDC implementation: ${before}`);
+    throw new Error(`Unexpected Outline 1.12.0 OIDC implementation: ${before}`);
   }
   source = source.replace(before, after);
 }
@@ -39,7 +39,7 @@ const authRouter = path.resolve("build/server/routes/auth/index.js");
 const signoutAnchor = 'router.get("/redirect", ';
 let authSource = fs.readFileSync(authRouter, "utf8");
 if (authSource.split(signoutAnchor).length !== 2) {
-  throw new Error(`Unexpected Outline 1.11.0 auth router: ${signoutAnchor}`);
+  throw new Error(`Unexpected Outline 1.12.0 auth router: ${signoutAnchor}`);
 }
 authSource = authSource.replace(
   signoutAnchor,
@@ -69,7 +69,7 @@ let authenticationSource = fs.readFileSync(authentication, "utf8");
 const sessionLength = /\(0,\s*[\w$]+\.addMonths\)\(new Date\(\),\s*3\)/g;
 const sessionLengthMatches = authenticationSource.match(sessionLength) || [];
 if (sessionLengthMatches.length !== 1) {
-  throw new Error(`Unexpected Outline 1.11.0 session length: ${sessionLengthMatches.length} matches`);
+  throw new Error(`Unexpected Outline 1.12.0 session length: ${sessionLengthMatches.length} matches`);
 }
 authenticationSource = authenticationSource.replace(
   sessionLength,

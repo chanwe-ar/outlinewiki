@@ -29,8 +29,8 @@ const APP = path.resolve("build/app");
 const STATIC_SOURCE = path.resolve("docker/chanwe/static");
 
 const version = JSON.parse(fs.readFileSync("package.json", "utf8")).version;
-if (version !== "1.11.0") {
-  throw new Error(`Expected Outline 1.11.0, received ${version}`);
+if (version !== "1.12.0") {
+  throw new Error(`Expected Outline 1.12.0, received ${version}`);
 }
 
 const replaceOnce = (source, before, after, label) => {
