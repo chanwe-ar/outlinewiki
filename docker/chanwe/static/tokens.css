@@ -159,6 +159,8 @@
   --cw-brand-radius-pane: 12px;
   --cw-brand-radius-row: 8px;
   --cw-brand-radius-pill: 999px;
+  --cw-brand-radius-surface: 16px;
+  --cw-brand-radius-band: 24px;
   --cw-brand-ease-out: cubic-bezier(.22, 1, .36, 1);
   --cw-brand-ease-standard: cubic-bezier(.4, 0, .2, 1);
   --cw-brand-ease-emphasis: cubic-bezier(.16, 1, .3, 1);
@@ -171,6 +173,15 @@
   --cw-brand-duration-base: 240ms;
   --cw-brand-duration-slow: 400ms;
   --cw-brand-duration-arrive: 700ms;
+  --cw-brand-shadow-rest: 0 1px 2px color-mix(in srgb, #111319 5%, transparent);
+  --cw-brand-shadow-lift: 0 1px 2px color-mix(in srgb, #111319 5%, transparent), 0 22px 40px -28px color-mix(in srgb, #111319 35%, transparent);
+  --cw-brand-shadow-overlay: 0 24px 64px -24px color-mix(in srgb, #111319 40%, transparent), 0 0 0 1px color-mix(in srgb, #111319 6%, transparent);
+  --cw-brand-sheen: color-mix(in srgb, #FFFFFF 75%, transparent);
+  --cw-brand-edge: color-mix(in srgb, #FFFFFF 85%, transparent);
+  --cw-brand-tint: color-mix(in srgb, #111319 7%, transparent);
+  --cw-brand-tint-strong: color-mix(in srgb, #111319 12%, transparent);
+  --cw-brand-glass: color-mix(in srgb, #FFFFFF 72%, transparent);
+  --cw-brand-glass-blur: 18px;
   color-scheme: light;
 }
 /* The dark theme (0.42.0): chosen by the page (data-theme) or by the system unless the page says light. */
@@ -238,6 +249,14 @@
   --cw-brand-research-muted-hsl: 223.3 7.5% 52.9%;
   --cw-brand-canvas-hsl: 216.7 20.5% 17.3%;
   --cw-brand-pane-hsl: 225 19% 8.2%;
+  --cw-brand-shadow-rest: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --cw-brand-shadow-lift: 0 1px 2px rgba(0, 0, 0, 0.3), 0 22px 40px -26px rgba(0, 0, 0, 0.6);
+  --cw-brand-shadow-overlay: 0 24px 64px -24px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --cw-brand-sheen: rgba(255, 255, 255, 0.05);
+  --cw-brand-edge: rgba(255, 255, 255, 0.1);
+  --cw-brand-tint: color-mix(in srgb, #FFFFFF 7%, transparent);
+  --cw-brand-tint-strong: color-mix(in srgb, #FFFFFF 12%, transparent);
+  --cw-brand-glass: color-mix(in srgb, #111319 72%, transparent);
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
@@ -305,6 +324,14 @@
     --cw-brand-research-muted-hsl: 223.3 7.5% 52.9%;
     --cw-brand-canvas-hsl: 216.7 20.5% 17.3%;
     --cw-brand-pane-hsl: 225 19% 8.2%;
+    --cw-brand-shadow-rest: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --cw-brand-shadow-lift: 0 1px 2px rgba(0, 0, 0, 0.3), 0 22px 40px -26px rgba(0, 0, 0, 0.6);
+    --cw-brand-shadow-overlay: 0 24px 64px -24px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+    --cw-brand-sheen: rgba(255, 255, 255, 0.05);
+    --cw-brand-edge: rgba(255, 255, 255, 0.1);
+    --cw-brand-tint: color-mix(in srgb, #FFFFFF 7%, transparent);
+    --cw-brand-tint-strong: color-mix(in srgb, #FFFFFF 12%, transparent);
+    --cw-brand-glass: color-mix(in srgb, #111319 72%, transparent);
     color-scheme: dark;
   }
 }
