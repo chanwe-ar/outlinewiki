@@ -178,8 +178,8 @@
   --cw-brand-shadow-overlay: 0 24px 64px -24px color-mix(in srgb, #111319 40%, transparent), 0 0 0 1px color-mix(in srgb, #111319 6%, transparent);
   --cw-brand-sheen: color-mix(in srgb, #FFFFFF 75%, transparent);
   --cw-brand-edge: color-mix(in srgb, #FFFFFF 85%, transparent);
-  --cw-brand-tint: color-mix(in srgb, #111319 7%, transparent);
-  --cw-brand-tint-strong: color-mix(in srgb, #111319 12%, transparent);
+  --cw-brand-tint: color-mix(in srgb, #64748B 13%, transparent);
+  --cw-brand-tint-strong: color-mix(in srgb, #64748B 21%, transparent);
   --cw-brand-glass: color-mix(in srgb, #FFFFFF 72%, transparent);
   --cw-brand-glass-blur: 18px;
   color-scheme: light;
@@ -254,8 +254,8 @@
   --cw-brand-shadow-overlay: 0 24px 64px -24px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
   --cw-brand-sheen: rgba(255, 255, 255, 0.05);
   --cw-brand-edge: rgba(255, 255, 255, 0.1);
-  --cw-brand-tint: color-mix(in srgb, #FFFFFF 7%, transparent);
-  --cw-brand-tint-strong: color-mix(in srgb, #FFFFFF 12%, transparent);
+  --cw-brand-tint: color-mix(in srgb, #94A3B8 12%, transparent);
+  --cw-brand-tint-strong: color-mix(in srgb, #94A3B8 19%, transparent);
   --cw-brand-glass: color-mix(in srgb, #111319 72%, transparent);
   color-scheme: dark;
 }
@@ -329,8 +329,8 @@
     --cw-brand-shadow-overlay: 0 24px 64px -24px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
     --cw-brand-sheen: rgba(255, 255, 255, 0.05);
     --cw-brand-edge: rgba(255, 255, 255, 0.1);
-    --cw-brand-tint: color-mix(in srgb, #FFFFFF 7%, transparent);
-    --cw-brand-tint-strong: color-mix(in srgb, #FFFFFF 12%, transparent);
+    --cw-brand-tint: color-mix(in srgb, #94A3B8 12%, transparent);
+    --cw-brand-tint-strong: color-mix(in srgb, #94A3B8 19%, transparent);
     --cw-brand-glass: color-mix(in srgb, #111319 72%, transparent);
     color-scheme: dark;
   }
