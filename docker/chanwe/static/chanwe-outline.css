@@ -113,23 +113,36 @@ h2,
 }
 
 /* ── App shell: CHANWE v2 (brandbook brand-v2.md; unification plan T5.4) ─────
-   The theme patch in brand-outline.cjs puts the rail on the canvas with slate
-   text, a tint on hover and a stronger tint on the active page (never an
-   orange fill); these rules finish it: mono section labels, ink for the active
-   page, a glass header with the scan line, and v2 shapes on what Outline draws
+   The theme patch in brand-outline.cjs gives the light theme a dark rail, the
+   dark canvas with slate-white text, a light tint on hover and a stronger one
+   on the active page (never an orange fill); these rules finish it: mono
+   section labels, white for the active page, a glass header with the scan line, and v2 shapes on what Outline draws
    around the document (pill buttons and fields, 12px menus, 16px dialogs).
    Outline's editor and its tabs keep their own look (decision Q11: third-party
    screens take tokens only). chanwe-outline.js marks the theme on <html>. */
 
+/* The rail is dark in the light theme too (the dark theme's look): its own
+   palette, from the kit's dark tokens. */
 html[data-cw-theme="light"] #sidebar {
-  color: var(--cw-brand-fg-muted);
-  border-right: 1px solid var(--cw-brand-rule);
+  --cw-rail-fg: color-mix(in srgb, var(--cw-brand-pure-white) 76%, transparent);
+  --cw-rail-ink: var(--cw-brand-pure-white);
+  --cw-rail-label: var(--cw-brand-fg-subtle);
+  --cw-rail-tint: color-mix(in srgb, var(--cw-brand-pure-white) 9%, transparent);
+  --cw-rail-rule: color-mix(in srgb, var(--cw-brand-pure-white) 10%, transparent);
+  color: var(--cw-rail-fg);
+  background: var(--cw-brand-ink-light);
+  border-right: 1px solid var(--cw-brand-ink-light);
+  color-scheme: dark;
 }
 
-/* Active page: the tint (from the theme), its text and icon in ink. */
+/* Active page: the tint (from the theme), its text and icon in white. */
 html[data-cw-theme="light"] #sidebar a[aria-current="page"],
 html[data-cw-theme="light"] #sidebar a[aria-current="page"] * {
-  color: var(--cw-brand-ink) !important;
+  color: var(--cw-rail-ink) !important;
+}
+html[data-cw-theme="light"] #sidebar a:hover,
+html[data-cw-theme="light"] #sidebar a:hover * {
+  color: var(--cw-rail-ink);
 }
 html[data-cw-theme="light"] #sidebar a[aria-current="page"] {
   font-weight: 600;
@@ -144,7 +157,7 @@ html[data-cw-theme="light"] #sidebar [role="treeitem"] > * {
 /* Section labels ("Colecciones", "Personal"…): mono labels (§5). */
 html[data-cw-theme="light"] #sidebar h3,
 html[data-cw-theme="light"] #sidebar [role="heading"] {
-  color: var(--cw-brand-fg-subtle) !important;
+  color: var(--cw-rail-label) !important;
   font: 500 10px/1 var(--cw-brand-font-mono) !important;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -158,10 +171,10 @@ html[data-cw-theme="light"] #sidebar [role="heading"] button {
   text-transform: inherit;
 }
 
-/* Workspace and account buttons at the rail's ends, in slate. */
+/* Workspace and account buttons at the rail's ends, in the rail's text. */
 html[data-cw-theme="light"] #sidebar [role="button"],
 html[data-cw-theme="light"] #sidebar button {
-  color: var(--cw-brand-fg-muted);
+  color: var(--cw-rail-fg);
 }
 html[data-cw-theme="light"] #sidebar [role="button"] *,
 html[data-cw-theme="light"] #sidebar button * {
@@ -190,7 +203,8 @@ html[data-cw-theme="light"] #sidebar .cw-espacios {
 }
 html[data-cw-theme="light"] #sidebar .cw-espacios:hover,
 html[data-cw-theme="light"] #sidebar .cw-espacios:focus-visible {
-  background: var(--cw-brand-tint);
+  background: var(--cw-rail-tint);
+  color: var(--cw-rail-ink);
 }
 
 /* Header: Outline's sticky 56px bar, glass (§2) with a rule and the brand's
@@ -277,5 +291,5 @@ html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after 
   mask: url("./chanwe-logo.svg") left center / contain no-repeat;
 }
 html[data-cw-theme="light"] #sidebar .cw-team {
-  color: var(--cw-brand-ink);
+  color: var(--cw-rail-ink);
 }

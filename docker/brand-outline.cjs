@@ -63,15 +63,15 @@ const THEME = [
   ["smoke:`#F4F7FA`", "smoke:`#F1F5F9`"], // surface-sunken
   ["smokeLight:`#F9FBFC`", "smokeLight:`#F8FAFC`"], // paper
   ["warmGrey:`hsl(212 31% 95% / 1)`", "warmGrey:`#F1F5F9`"], // surface-sunken
-  // CHANWE v2 (brandbook brand-v2.md §2, §6, §7): the light theme's sidebar is
-  // the v2 rail on the canvas, slate text, hover the tint, the active item a
-  // stronger tint with ink text, never an orange fill.
-  ["sidebarBackground:`hsl(212 31% 95% / 1)`", "sidebarBackground:`#E9EEF4`"], // canvas
-  ["sidebarHoverBackground:`hsl(212 31% 90% / 1)`", "sidebarHoverBackground:`rgba(100, 116, 139, 0.13)`"], // tint
-  ["sidebarActiveBackground:`hsl(212 31% 85% / 1)`", "sidebarActiveBackground:`rgba(100, 116, 139, 0.21)`"], // tint-strong
-  ["sidebarControlHoverBackground:`rgb(138 164 193 / 20%)`", "sidebarControlHoverBackground:`rgba(100, 116, 139, 0.13)`"], // tint
-  ["sidebarDraftBorder:`hsl(212 31% 75% / 1)`", "sidebarDraftBorder:`rgba(100, 116, 139, 0.35)`"],
-  ["sidebarText:`rgb(78, 92, 110)`", "sidebarText:`#475569`"], // fg-muted
+  // CHANWE v2 (brandbook brand-v2.md §2, §6, §7): the light theme's sidebar
+  // takes the dark theme's look, the kit's dark canvas (ink-light), slate-white
+  // text, hover and active a light tint with white text, never an orange fill.
+  ["sidebarBackground:`hsl(212 31% 95% / 1)`", "sidebarBackground:`#232A35`"], // ink-light (dark canvas)
+  ["sidebarHoverBackground:`hsl(212 31% 90% / 1)`", "sidebarHoverBackground:`rgba(148, 163, 184, 0.12)`"], // dark tint
+  ["sidebarActiveBackground:`hsl(212 31% 85% / 1)`", "sidebarActiveBackground:`rgba(148, 163, 184, 0.19)`"], // dark tint-strong
+  ["sidebarControlHoverBackground:`rgb(138 164 193 / 20%)`", "sidebarControlHoverBackground:`rgba(148, 163, 184, 0.12)`"], // dark tint
+  ["sidebarDraftBorder:`hsl(212 31% 75% / 1)`", "sidebarDraftBorder:`rgba(148, 163, 184, 0.35)`"],
+  ["sidebarText:`rgb(78, 92, 110)`", "sidebarText:`#C3CAD4`"], // dark fg-muted
   ["link:`#137FFB`", "link:`#FD3810`"], // dark theme links
   // Light code highlighting in the brand code roles.
   ["codeKeyword:`#00009f`", "codeKeyword:`#FD3810`"],
