@@ -112,37 +112,56 @@ h2,
   .cw-espacios { transition: none; }
 }
 
-/* ── App shell (light theme) ───────────────────────────────────────────
-   The brandbook's shell (chanwe-brandbook src/app-shell.css): the theme patch
-   in brand-outline.cjs turns the sidebar into the dark rail (ink-light, white
-   at 65%, active in orange); these rules finish it and give the header the
-   56px white bar with its scan line. Outline's buttons and behaviour stay as
-   they are. chanwe-outline.js marks the theme on <html>. */
+/* ── App shell: CHANWE v2 (brandbook brand-v2.md; unification plan T5.4) ─────
+   The theme patch in brand-outline.cjs puts the rail on the canvas with slate
+   text, a tint on hover and a stronger tint on the active page (never an
+   orange fill); these rules finish it: mono section labels, ink for the active
+   page, a glass header with the scan line, and v2 shapes on what Outline draws
+   around the document (pill buttons and fields, 12px menus, 16px dialogs).
+   Outline's editor and its tabs keep their own look (decision Q11: third-party
+   screens take tokens only). chanwe-outline.js marks the theme on <html>. */
 
 html[data-cw-theme="light"] #sidebar {
-  color: rgba(255, 255, 255, 0.65);
-  border-right: 0;
+  color: var(--cw-brand-fg-muted);
+  border-right: 1px solid var(--cw-brand-rule);
 }
 
-/* Active item: orange (from the theme), its text and icon white. */
+/* Active page: the tint (from the theme), its text and icon in ink. */
 html[data-cw-theme="light"] #sidebar a[aria-current="page"],
 html[data-cw-theme="light"] #sidebar a[aria-current="page"] * {
-  color: var(--cw-brand-pure-white) !important;
+  color: var(--cw-brand-ink) !important;
+}
+html[data-cw-theme="light"] #sidebar a[aria-current="page"] {
+  font-weight: 600;
 }
 
-/* Section labels ("Colecciones", "Destacados"…): the rail's small caps. */
+/* Rows are 8px (§3). */
+html[data-cw-theme="light"] #sidebar a,
+html[data-cw-theme="light"] #sidebar [role="treeitem"] > * {
+  border-radius: var(--cw-brand-radius-row);
+}
+
+/* Section labels ("Colecciones", "Personal"…): mono labels (§5). */
 html[data-cw-theme="light"] #sidebar h3,
 html[data-cw-theme="light"] #sidebar [role="heading"] {
-  color: rgba(255, 255, 255, 0.35) !important;
-  font: 600 10px/1 var(--cw-font-display, Satoshi, sans-serif) !important;
-  letter-spacing: 0.16em;
+  color: var(--cw-brand-fg-subtle) !important;
+  font: 500 10px/1 var(--cw-brand-font-mono) !important;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
+/* The label is a button inside the heading (it folds the section): it takes the heading's look. */
+html[data-cw-theme="light"] #sidebar h3 button,
+html[data-cw-theme="light"] #sidebar [role="heading"] button {
+  color: inherit !important;
+  font: inherit !important;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
 
-/* Workspace and account buttons at the rail's ends, in white. */
+/* Workspace and account buttons at the rail's ends, in slate. */
 html[data-cw-theme="light"] #sidebar [role="button"],
 html[data-cw-theme="light"] #sidebar button {
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--cw-brand-fg-muted);
 }
 html[data-cw-theme="light"] #sidebar [role="button"] *,
 html[data-cw-theme="light"] #sidebar button * {
@@ -150,13 +169,13 @@ html[data-cw-theme="light"] #sidebar button * {
 }
 
 /* The title field that appears in the rail when a page or a collection is created or renamed (Outline's
-   EditableTitle input): ink text on paper, so it is never white on white; the focus ring in orange. */
+   EditableTitle input): ink text on a pane, a 2px orange focus ring (§7). */
 #sidebar input,
 #sidebar [contenteditable="true"] {
   color: var(--cw-brand-ink) !important;
-  background: var(--cw-brand-paper) !important;
+  background: var(--cw-brand-pane) !important;
   caret-color: var(--cw-brand-primary);
-  border-radius: 4px;
+  border-radius: var(--cw-brand-radius-row);
   padding: 0 6px;
 }
 #sidebar input:focus-visible,
@@ -166,16 +185,20 @@ html[data-cw-theme="light"] #sidebar button * {
 }
 
 /* Espacios row on the rail. */
+html[data-cw-theme="light"] #sidebar .cw-espacios {
+  border-radius: var(--cw-brand-radius-row);
+}
 html[data-cw-theme="light"] #sidebar .cw-espacios:hover,
 html[data-cw-theme="light"] #sidebar .cw-espacios:focus-visible {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--cw-brand-tint);
 }
 
-/* Header: Outline's sticky 56px bar, solid white with a rule and the
-   brand's scan line under it. */
+/* Header: Outline's sticky 56px bar, glass (§2) with a rule and the brand's
+   scan line under it. */
 html[data-cw-theme="light"] [role="main"] > div > div:first-child[class] {
-  background: var(--cw-brand-pure-white) !important;
-  backdrop-filter: none !important;
+  background: var(--cw-brand-glass) !important;
+  -webkit-backdrop-filter: blur(var(--cw-brand-glass-blur)) !important;
+  backdrop-filter: blur(var(--cw-brand-glass-blur)) !important;
   border-bottom: 1px solid var(--cw-brand-rule);
 }
 html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after {
@@ -194,13 +217,51 @@ html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after 
   html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after { animation: none; }
 }
 
-/* Rail: the brand's dot field over ink-light. */
-html[data-cw-theme="light"] #sidebar {
-  background-image: radial-gradient(color-mix(in srgb, var(--cw-brand-paper) 5.5%, transparent) 1px, transparent 1px);
-  background-size: 16px 16px;
+/* Controls (§3, §5, §7): every button around the document is a pill in
+   sentence case, Satoshi 500; an icon button becomes a circle. Menu items,
+   tabs and the editor's own blocks keep theirs. */
+#root [role="main"] button:not([role="menuitem"]):not([role="tab"]):not(.ProseMirror *),
+#root [role="main"] a[role="button"],
+[role="dialog"] button:not([role="menuitem"]):not([role="tab"]) {
+  border-radius: var(--cw-brand-radius-pill) !important;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
-/* Rail head: the white CHANWE wordmark in place of the team's icon and name
+/* Fields (§7): pills on a pane with a hairline; multi-line fields 16px panes;
+   focus a 2px orange ring. */
+#root [role="main"] input:is([type="text"], [type="search"], [type="email"], [type="url"], :not([type])):not(.ProseMirror *),
+[role="dialog"] input:is([type="text"], [type="search"], [type="email"], [type="url"], :not([type])),
+#root [role="main"] select,
+[role="dialog"] select {
+  border-radius: var(--cw-brand-radius-pill) !important;
+}
+#root [role="main"] input:is([type="text"], [type="search"], [type="email"], [type="url"], :not([type])):not(.ProseMirror *),
+[role="dialog"] input:is([type="text"], [type="search"], [type="email"], [type="url"], :not([type])) {
+  padding-inline: 12px;
+}
+#root [role="main"] textarea,
+[role="dialog"] textarea {
+  border-radius: var(--cw-brand-radius-surface) !important;
+}
+
+/* Menus float (§2, §4): 12px, overlay depth, 8px rows with a tint on hover. */
+[role="menu"] {
+  border-radius: var(--cw-brand-radius-pane) !important;
+  box-shadow: var(--cw-brand-shadow-overlay) !important;
+}
+[role="menu"] [role="menuitem"] {
+  border-radius: var(--cw-brand-radius-row) !important;
+}
+
+/* Dialogs (§4 overlay): 16px, one depth. */
+[role="dialog"][aria-modal="true"] > div,
+.ReactModal__Content {
+  border-radius: var(--cw-brand-radius-surface) !important;
+  box-shadow: var(--cw-brand-shadow-overlay) !important;
+}
+
+/* Rail head: the CHANWE wordmark in ink in place of the team's icon and name
    (chanwe-outline.js marks the button); the button and its menu stay. */
 #sidebar .cw-team > * {
   display: none;
@@ -216,5 +277,5 @@ html[data-cw-theme="light"] #sidebar {
   mask: url("./chanwe-logo.svg") left center / contain no-repeat;
 }
 html[data-cw-theme="light"] #sidebar .cw-team {
-  color: var(--cw-brand-pure-white);
+  color: var(--cw-brand-ink);
 }

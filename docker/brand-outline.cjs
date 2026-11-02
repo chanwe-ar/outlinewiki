@@ -63,14 +63,15 @@ const THEME = [
   ["smoke:`#F4F7FA`", "smoke:`#F1F5F9`"], // surface-sunken
   ["smokeLight:`#F9FBFC`", "smokeLight:`#F8FAFC`"], // paper
   ["warmGrey:`hsl(212 31% 95% / 1)`", "warmGrey:`#F1F5F9`"], // surface-sunken
-  // The light theme's sidebar is the brand app shell's dark rail (ink-light),
-  // white at 65%, the active item in orange (chanwe-brandbook app-shell.css).
-  ["sidebarBackground:`hsl(212 31% 95% / 1)`", "sidebarBackground:`#232A35`"],
-  ["sidebarHoverBackground:`hsl(212 31% 90% / 1)`", "sidebarHoverBackground:`rgba(255, 255, 255, 0.1)`"],
-  ["sidebarActiveBackground:`hsl(212 31% 85% / 1)`", "sidebarActiveBackground:`#FD3810`"],
-  ["sidebarControlHoverBackground:`rgb(138 164 193 / 20%)`", "sidebarControlHoverBackground:`rgba(255, 255, 255, 0.12)`"],
-  ["sidebarDraftBorder:`hsl(212 31% 75% / 1)`", "sidebarDraftBorder:`rgba(255, 255, 255, 0.25)`"],
-  ["sidebarText:`rgb(78, 92, 110)`", "sidebarText:`rgba(255, 255, 255, 0.65)`"],
+  // CHANWE v2 (brandbook brand-v2.md §2, §6, §7): the light theme's sidebar is
+  // the v2 rail on the canvas, slate text, hover the tint, the active item a
+  // stronger tint with ink text, never an orange fill.
+  ["sidebarBackground:`hsl(212 31% 95% / 1)`", "sidebarBackground:`#E9EEF4`"], // canvas
+  ["sidebarHoverBackground:`hsl(212 31% 90% / 1)`", "sidebarHoverBackground:`rgba(100, 116, 139, 0.13)`"], // tint
+  ["sidebarActiveBackground:`hsl(212 31% 85% / 1)`", "sidebarActiveBackground:`rgba(100, 116, 139, 0.21)`"], // tint-strong
+  ["sidebarControlHoverBackground:`rgb(138 164 193 / 20%)`", "sidebarControlHoverBackground:`rgba(100, 116, 139, 0.13)`"], // tint
+  ["sidebarDraftBorder:`hsl(212 31% 75% / 1)`", "sidebarDraftBorder:`rgba(100, 116, 139, 0.35)`"],
+  ["sidebarText:`rgb(78, 92, 110)`", "sidebarText:`#475569`"], // fg-muted
   ["link:`#137FFB`", "link:`#FD3810`"], // dark theme links
   // Light code highlighting in the brand code roles.
   ["codeKeyword:`#00009f`", "codeKeyword:`#FD3810`"],
