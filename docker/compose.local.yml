@@ -1,0 +1,44 @@
+# Local run of CHANWE's Wiki image (docs/en/start_here.md, docs/es/start_here.md).
+# Builds the repo's Dockerfile (released Outline image + CHANWE patches) and starts it
+# with a throwaway PostgreSQL and Redis. Placeholder secrets only; never put real values here.
+#   docker compose -f docker/compose.local.yml up --build
+#   open http://localhost:3000   (health: http://localhost:3000/_health)
+# Sign-in needs a CHANWE Identity client whose redirect list includes
+# http://localhost:3000/auth/oidc.callback; without one the page loads but nobody can sign in.
+name: outline-local
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: outline
+      POSTGRES_PASSWORD: outline
+      POSTGRES_DB: outline
+  redis:
+    image: redis:8-alpine
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: chanwe/outline:local
+    depends_on: [postgres, redis]
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      URL: http://localhost:3000
+      PORT: "3000"
+      NODE_ENV: production
+      FORCE_HTTPS: "false"
+      PGSSLMODE: disable
+      SECRET_KEY: "0000000000000000000000000000000000000000000000000000000000000000"
+      UTILS_SECRET: local-only-placeholder
+      DATABASE_URL: postgres://outline:outline@postgres:5432/outline
+      REDIS_URL: redis://redis:6379
+      FILE_STORAGE: local
+      FILE_STORAGE_LOCAL_ROOT_DIR: /var/lib/outline/data
+      OIDC_ISSUER_URL: https://identity.chanwe.ar
+      OIDC_AUTH_URI: https://identity.chanwe.ar/authorize
+      OIDC_TOKEN_URI: https://identity.chanwe.ar/token
+      OIDC_USERINFO_URI: https://identity.chanwe.ar/userinfo
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-chanwe-wiki-local}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:-placeholder}
+      OIDC_DISPLAY_NAME: CHANWE
