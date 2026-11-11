@@ -12,7 +12,7 @@
   --cw-brand-fg: #111319;
   --cw-brand-body-fg: #475569;
   --cw-brand-fg-muted: #475569;
-  --cw-brand-fg-subtle: #8A94A6;
+  --cw-brand-fg-subtle: #5B6677;
   --cw-brand-emphasis: #484848;
   --cw-brand-paper: #F8FAFC;
   --cw-brand-callout-surface: #F8FAFC;
@@ -83,7 +83,7 @@
   --cw-brand-fg-hsl: 225 19% 8.2%;
   --cw-brand-body-fg-hsl: 215.3 19.3% 34.5%;
   --cw-brand-fg-muted-hsl: 215.3 19.3% 34.5%;
-  --cw-brand-fg-subtle-hsl: 218.6 13.6% 59.6%;
+  --cw-brand-fg-subtle-hsl: 216.4 13.3% 41.2%;
   --cw-brand-emphasis-hsl: 0 0% 28.2%;
   --cw-brand-paper-hsl: 210 40% 98%;
   --cw-brand-callout-surface-hsl: 210 40% 98%;
@@ -149,6 +149,8 @@
   --cw-brand-role-warning: #F9E710;
   --cw-brand-role-danger: #D32F2F;
   --cw-brand-role-info: #0C48ED;
+  --cw-brand-primary-hover: #EA3511;
+  --cw-brand-primary-pressed: #D73211;
   --cw-brand-font-display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
   --cw-brand-font-body: "Satoshi", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   --cw-brand-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -182,6 +184,7 @@
   --cw-brand-tint-strong: color-mix(in srgb, #64748B 21%, transparent);
   --cw-brand-glass: color-mix(in srgb, #FFFFFF 72%, transparent);
   --cw-brand-glass-blur: 18px;
+  --cw-brand-shell-bar: 56px;
   --cw-brand-space-2xs: 4px;
   --cw-brand-space-xs: 8px;
   --cw-brand-space-sm: 12px;
@@ -305,6 +308,8 @@
   --cw-brand-tint: color-mix(in srgb, #94A3B8 12%, transparent);
   --cw-brand-tint-strong: color-mix(in srgb, #94A3B8 19%, transparent);
   --cw-brand-glass: color-mix(in srgb, #111319 72%, transparent);
+  --cw-brand-primary-hover: #FC4723;
+  --cw-brand-primary-pressed: #FC5635;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
@@ -380,6 +385,8 @@
     --cw-brand-tint: color-mix(in srgb, #94A3B8 12%, transparent);
     --cw-brand-tint-strong: color-mix(in srgb, #94A3B8 19%, transparent);
     --cw-brand-glass: color-mix(in srgb, #111319 72%, transparent);
+    --cw-brand-primary-hover: #FC4723;
+    --cw-brand-primary-pressed: #FC5635;
     color-scheme: dark;
   }
 }
