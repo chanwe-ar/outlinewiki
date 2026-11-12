@@ -13,7 +13,8 @@ publicada `outlinewiki/outline:1.12.0` y la parchea al construirla. La capa de C
 | Ruta | Qué hace |
 |---|---|
 | `Dockerfile` | Fija la versión de Outline, copia los archivos de CHANWE y corre los dos scripts de parches. |
-| `docker/configure-outline-release.cjs` | Parches del servidor: PKCE `S256` en el router OIDC, ID token verificado en vez de llamar a userinfo, `GET /auth/chanwe.signout`, sesiones de 7 días. |
+| `docker/configure-outline-release.cjs` | Parches del servidor: PKCE `S256` en el router OIDC, ID token verificado en vez de llamar a userinfo, `GET /auth/chanwe.signout`, `GET /auth/chanwe.subject` (el sujeto de Identity de quien inició sesión, para Umami), sesiones de 7 días. |
+| `docker/chanwe-subject.cjs` (+ test), `docker/chanwe/static/chanwe-umami.js` (+ `docker/chanwe-umami.test.cjs`) | Chanwines: la página nombra su sesión de Umami con el sujeto de Identity (`user_authentications.providerId` del proveedor `oidc`), una vez por carga y nunca dentro de la app de escritorio. |
 | `docker/oidc-identity-profile.cjs` (+ `.test.cjs`) | Verifica el ID token de Identity y el permiso `wiki:access` del access token. |
 | `docker/brand-outline.cjs` | Parches del frontend: colores y fuentes de marca en el chunk del tema, sin «Log out», carpeta de assets con hash, archivos de marca en `index.html`, favicon, manifest. |
 | `docker/chanwe/static/`, `docker/chanwe/images/` | Archivos de marca (tokens, CSS, fuentes, íconos, el velo de la app, la fila «Volver a CHANWE Espacios» del sidebar). Son copias de `chanwe-brandbook` (`brand/consumers.json`). |
@@ -65,13 +66,15 @@ Tests del adaptador de Identity (el test runner de Node; necesitan `jsonwebtoken
 
 ```bash
 docker run --rm -v "$PWD/docker:/opt/outline/chanwe-test:ro" --entrypoint node chanwe/outline:local \
-  --test chanwe-test/oidc-identity-profile.test.cjs chanwe-test/oidc-pkce-store.test.cjs
+  --test chanwe-test/oidc-identity-profile.test.cjs chanwe-test/oidc-pkce-store.test.cjs \
+  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs
 ```
 
 Sin Docker sirve cualquier carpeta con `jsonwebtoken` 9 instalado (probado el 2026-11-03, pasan los 30 tests):
 
 ```bash
-NODE_PATH=/ruta/a/node_modules node --test docker/oidc-identity-profile.test.cjs docker/oidc-pkce-store.test.cjs
+NODE_PATH=/ruta/a/node_modules node --test docker/oidc-identity-profile.test.cjs docker/oidc-pkce-store.test.cjs \
+  docker/chanwe-subject.test.cjs docker/chanwe-umami.test.cjs
 ```
 
 El desarrollo de upstream (`yarn install`, `yarn dev:watch`) funciona como lo documenta Outline, pero corre el código

@@ -189,7 +189,8 @@ index = replaceOnce(
     <link rel="preload" href="${brand}/fonts/Satoshi-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="${brand}/tokens.css" />
     <link rel="stylesheet" href="${brand}/chanwe-outline.css" />
-    <script defer src="${brand}/chanwe-outline.js"></script>`,
+    <script defer src="${brand}/chanwe-outline.js"></script>
+    <script defer src="${brand}/chanwe-umami.js"></script>`,
   "index.html head"
 );
 // The veil must be a blocking script ahead of the app so it covers the first

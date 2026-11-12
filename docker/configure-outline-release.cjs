@@ -58,8 +58,17 @@ authSource = authSource.replace(
     ctx.set("Cache-Control", "no-store");
     ctx.status = 204;
 });
+// Chanwines: the signed-in person's Identity subject, for Umami (docker/chanwe-subject.cjs).
+router.get("/chanwe.subject", require("../../../../docker/chanwe-subject.cjs").subjectHandler({
+    models: _models,
+    getUserForJWT: (token, kinds) => require("../../utils/jwt").getUserForJWT(token, kinds),
+}));
 ${signoutAnchor}`
 );
+// The subject route reads Outline's models through the router's own import.
+if (!authSource.includes('const _models = require("../../models");')) {
+  throw new Error("Unexpected Outline 1.12.0 auth router: no _models import");
+}
 fs.writeFileSync(authRouter, authSource);
 
 // Sessions last at most 7 days, like every CHANWE app (Outline's default is 3

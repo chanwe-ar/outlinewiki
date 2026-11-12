@@ -11,7 +11,7 @@ ENV NODE_OPTIONS="--require=/opt/outline/docker/slow-buffer-shim.cjs"
 # Chanwe Identity requires PKCE and returns profile claims in its ID token.
 # Outline's native state store now handles PKCE; retain strict ID-token checks,
 # and require Identity's wiki:access grant in the access token.
-COPY --chown=nodejs:nodejs docker/oidc-identity-profile.cjs docker/configure-outline-release.cjs ./docker/
+COPY --chown=nodejs:nodejs docker/oidc-identity-profile.cjs docker/chanwe-subject.cjs docker/configure-outline-release.cjs ./docker/
 RUN node docker/configure-outline-release.cjs
 
 # CHANWE brand (chanwe-brandbook): theme colours and fonts, the app veil, the

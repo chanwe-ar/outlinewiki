@@ -5,6 +5,10 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+- Umami (Chanwines): the Wiki names its Umami session with the signed-in person's Identity subject (Outline's
+  `user_authentications.providerId` for the `oidc` provider), once per page load and never inside the desktop app.
+  New `GET /auth/chanwe.subject` (`docker/chanwe-subject.cjs`, patched in by `configure-outline-release.cjs`) and
+  `static/chanwe-umami.js`; tests in `docker/chanwe-subject.test.cjs` and `docker/chanwe-umami.test.cjs`.
 - Brand copies refreshed from kit 1.1.0 (`pnpm brand:sync`): fg-subtle is now #5B6677, new tokens primary-hover, primary-pressed and shell-bar.
 - Docs: `docs/es/` and `docs/en/` with `start_here.md`, `data-tree.md` and `guide.md` for CHANWE's layer.
 - `docker/compose.local.yml`: builds the image and runs it locally with a throwaway PostgreSQL and Redis.

@@ -74,7 +74,8 @@ Antes de mergear:
 ```bash
 docker build -t chanwe/outline:local .                     # todos los parches coincidieron
 docker run --rm -v "$PWD/docker:/opt/outline/chanwe-test:ro" --entrypoint node chanwe/outline:local \
-  --test chanwe-test/oidc-identity-profile.test.cjs chanwe-test/oidc-pkce-store.test.cjs
+  --test chanwe-test/oidc-identity-profile.test.cjs chanwe-test/oidc-pkce-store.test.cjs \
+  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs
 docker compose -f docker/compose.local.yml up --build      # mirá http://localhost:3000
 ```
 
