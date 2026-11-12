@@ -13,7 +13,8 @@ image `outlinewiki/outline:1.12.0` and patches it at build time. CHANWE's layer 
 | Path | What it does |
 |---|---|
 | `Dockerfile` | Pins the Outline release, copies CHANWE's files and runs the two patch scripts. |
-| `docker/configure-outline-release.cjs` | Server patches: PKCE `S256` on the OIDC router, verified ID token instead of a userinfo call, `GET /auth/chanwe.signout`, 7-day sessions. |
+| `docker/configure-outline-release.cjs` | Server patches: PKCE `S256` on the OIDC router, verified ID token instead of a userinfo call, `GET /auth/chanwe.signout`, `GET /auth/chanwe.subject` (the signed-in person's Identity subject, for Umami), 7-day sessions. |
+| `docker/chanwe-subject.cjs` (+ test), `docker/chanwe/static/chanwe-umami.js` (+ `docker/chanwe-umami.test.cjs`) | Chanwines: the page names its Umami session with the Identity subject (`user_authentications.providerId` of the `oidc` provider), once per page load and never inside the desktop app. |
 | `docker/oidc-identity-profile.cjs` (+ `.test.cjs`) | Verifies Identity's ID token and the access token's `wiki:access` grant. |
 | `docker/brand-outline.cjs` | Frontend patches: brand colours and fonts in Outline's theme chunk, no «Log out», hashed asset folder, brand files in `index.html`, favicon, web manifest. |
 | `docker/chanwe/static/`, `docker/chanwe/images/` | Brand files (tokens, CSS, fonts, icons, the app veil, the «Volver a CHANWE Espacios» sidebar row). Copies from `chanwe-brandbook` (`brand/consumers.json`). |
@@ -64,13 +65,15 @@ Unit tests of the Identity adapter (Node's test runner; they need `jsonwebtoken`
 
 ```bash
 docker run --rm -v "$PWD/docker:/opt/outline/chanwe-test:ro" --entrypoint node chanwe/outline:local \
-  --test chanwe-test/oidc-identity-profile.test.cjs chanwe-test/oidc-pkce-store.test.cjs
+  --test chanwe-test/oidc-identity-profile.test.cjs chanwe-test/oidc-pkce-store.test.cjs \
+  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs
 ```
 
 Without Docker, any folder with `jsonwebtoken` 9 installed works (checked 2026-11-03, 30 tests pass):
 
 ```bash
-NODE_PATH=/path/to/node_modules node --test docker/oidc-identity-profile.test.cjs docker/oidc-pkce-store.test.cjs
+NODE_PATH=/path/to/node_modules node --test docker/oidc-identity-profile.test.cjs docker/oidc-pkce-store.test.cjs \
+  docker/chanwe-subject.test.cjs docker/chanwe-umami.test.cjs
 ```
 
 Upstream development (`yarn install`, `yarn dev:watch`) works as Outline documents it, but it runs Outline's source,
