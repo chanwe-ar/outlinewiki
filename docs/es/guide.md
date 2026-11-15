@@ -62,6 +62,17 @@ también se pueden fijar con `OIDC_ACCESS_TOKEN_AUDIENCE` y `OIDC_REQUIRED_SCOPE
 En el servidor, `ssh apps chanwe-update --infra outline --dry-run` te dice si hay un Outline más nuevo; nunca sube la
 versión fijada, que vive en este repo.
 
+### Exportar (PDF memo y Markdown)
+
+- **Quién lo hace:** el renderer de Publish (`chanwe-publish/render`, contenedor `publish-render`). Acá solo vive el
+  script del menú, `docker/chanwe/static/chanwe-export.js`, que el `brand-outline.cjs` inyecta en `index.html`.
+- **Cómo se usa:** en una página, `…` → «Descargar» → «PDF (memo CHANWE)». En una colección, `…` → «Markdown (un
+  archivo)» o «PDF (memo CHANWE)» (aparecen después de «Exportar…», que Outline muestra a quien puede exportar). La
+  descarga de Markdown de una página sigue siendo la de Outline.
+- **Reglas:** exporta lo que quien exporta puede descargar en Outline; colecciones de hasta 150 páginas y 90 s.
+- **Si el menú cambia** con una versión nueva de Outline, el script no agrega nada (falla cerrado): ajustar
+  `findAnchor` y su test. No toca ningún control de licencia de Outline.
+
 ### Variables de entorno
 
 Los valores reales están en `stacks/outline/.env` del servidor y en chanwe-locker. Si agregás una, sumala a
