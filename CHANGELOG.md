@@ -5,6 +5,8 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+## 2026-11-15 · Export menu (Publish Render), Umami identify, kit 1.1 brand copies
+
 - Export: `static/chanwe-export.js` adds «PDF (memo CHANWE)» to a page's download menu and «Markdown (un archivo)» /
   «PDF (memo CHANWE)» to a collection's menu; they link to `/chanwe/export/…`, served by Publish's renderer
   (`chanwe-publish/render`) through Caddy. Tests in `docker/chanwe-export.test.cjs` and, against Outline 1.12's real menu DOM (labels with the `.md`/`.html`
