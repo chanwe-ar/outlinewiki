@@ -5,6 +5,10 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+- Export: `static/chanwe-export.js` adds «PDF (memo CHANWE)» to a page's download menu and «Markdown (un archivo)» /
+  «PDF (memo CHANWE)» to a collection's menu; they link to `/chanwe/export/…`, served by Publish's renderer
+  (`chanwe-publish/render`) through Caddy. Tests in `docker/chanwe-export.test.cjs` and, against Outline 1.12's real menu DOM (labels with the `.md`/`.html`
+  hint, menus opened from the sidebar left alone), `docker/chanwe-export.dom.test.cjs`.
 - Umami (Chanwines): the Wiki names its Umami session with the signed-in person's Identity subject (Outline's
   `user_authentications.providerId` for the `oidc` provider), once per page load and never inside the desktop app.
   New `GET /auth/chanwe.subject` (`docker/chanwe-subject.cjs`, patched in by `configure-outline-release.cjs`) and

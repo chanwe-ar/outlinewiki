@@ -59,6 +59,17 @@ and scope can also be set with `OIDC_ACCESS_TOKEN_AUDIENCE` and `OIDC_REQUIRED_S
 
 On the server, `ssh apps chanwe-update --infra outline --dry-run` tells you whether a newer Outline exists; it never bumps the pin, which lives in this repo.
 
+### Export (memo PDF and Markdown)
+
+- **Who does it:** Publish's renderer (`chanwe-publish/render`, container `publish-render`). Only the menu script
+  lives here, `docker/chanwe/static/chanwe-export.js`, injected into `index.html` by `brand-outline.cjs`.
+- **How to use it:** on a page, `…` → «Exportar» → «PDF (memo CHANWE)». On a collection, `…` → «Markdown (un
+  archivo)» or «PDF (memo CHANWE)» (after «Exportar…», which Outline shows to whoever may export). A page's Markdown
+  download is still Outline's own.
+- **Rules:** exports what the exporting person may download in Outline; collections up to 150 pages and 90 s.
+- **If the menu changes** in a new Outline release, the script adds nothing (fails closed): adjust `findAnchor` and its
+  test. No Outline licence check is touched.
+
 ### Environment variables
 
 Real values live in the server's `stacks/outline/.env` and in chanwe-locker. Add a new one to `.env.example`

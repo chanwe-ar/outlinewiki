@@ -190,7 +190,8 @@ index = replaceOnce(
     <link rel="stylesheet" href="${brand}/tokens.css" />
     <link rel="stylesheet" href="${brand}/chanwe-outline.css" />
     <script defer src="${brand}/chanwe-outline.js"></script>
-    <script defer src="${brand}/chanwe-umami.js"></script>`,
+    <script defer src="${brand}/chanwe-umami.js"></script>
+    <script defer src="${brand}/chanwe-export.js"></script>`,
   "index.html head"
 );
 // The veil must be a blocking script ahead of the app so it covers the first
