@@ -63,7 +63,7 @@ On the server, `ssh apps chanwe-update --infra outline --dry-run` tells you whet
 
 - **Who does it:** Publish's renderer (`chanwe-publish/render`, container `publish-render`). Only the menu script
   lives here, `docker/chanwe/static/chanwe-export.js`, injected into `index.html` by `brand-outline.cjs`.
-- **How to use it:** on a page, `…` → «Descargar» → «PDF (memo CHANWE)». On a collection, `…` → «Markdown (un
+- **How to use it:** on a page, `…` → «Exportar» → «PDF (memo CHANWE)». On a collection, `…` → «Markdown (un
   archivo)» or «PDF (memo CHANWE)» (after «Exportar…», which Outline shows to whoever may export). A page's Markdown
   download is still Outline's own.
 - **Rules:** exports what the exporting person may download in Outline; collections up to 150 pages and 90 s.

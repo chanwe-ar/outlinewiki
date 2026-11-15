@@ -66,7 +66,7 @@ versión fijada, que vive en este repo.
 
 - **Quién lo hace:** el renderer de Publish (`chanwe-publish/render`, contenedor `publish-render`). Acá solo vive el
   script del menú, `docker/chanwe/static/chanwe-export.js`, que el `brand-outline.cjs` inyecta en `index.html`.
-- **Cómo se usa:** en una página, `…` → «Descargar» → «PDF (memo CHANWE)». En una colección, `…` → «Markdown (un
+- **Cómo se usa:** en una página, `…` → «Exportar» → «PDF (memo CHANWE)». En una colección, `…` → «Markdown (un
   archivo)» o «PDF (memo CHANWE)» (aparecen después de «Exportar…», que Outline muestra a quien puede exportar). La
   descarga de Markdown de una página sigue siendo la de Outline.
 - **Reglas:** exporta lo que quien exporta puede descargar en Outline; colecciones de hasta 150 páginas y 90 s.

@@ -1,6 +1,6 @@
 /*
  * Wiki export (2026-11-15): adds CHANWE's exports to Outline's menus. On a page, «PDF (memo CHANWE)» next to Outline's
- * own «Markdown» and «HTML» downloads; on a collection, «Markdown (un archivo)» and «PDF (memo CHANWE)» after
+ * own «Markdown» and «HTML» items (submenu «Exportar»); on a collection, «Markdown (un archivo)» and «PDF (memo CHANWE)» after
  * «Exportar…». Each item only navigates to /chanwe/export/…, which Caddy sends to Publish's renderer
  * (chanwe-publish/render): it reads the Wiki with the reader's own session, so nobody gets more than they can open.
  * If Outline's menus change and the anchor isn't found, nothing is added. No Outline licence check is touched.
@@ -43,22 +43,49 @@
     return -1;
   }
 
-  /** Copies Outline's item (so it looks the same) with our label and link. */
+  /** Outline 1.12 item: MenuLabel <div> (+ icon, + MenuShortcut <span> with a hint such as ".md"). */
+  function labelElement(item) {
+    for (var c = item.firstElementChild; c; c = c.nextElementSibling) {
+      if (c.tagName === "DIV" && c.textContent.trim()) return c;
+    }
+    return null;
+  }
+
+  function shortcutElement(item) {
+    for (var c = item.lastElementChild; c; c = c.previousElementSibling) {
+      if (c.tagName === "SPAN") return c;
+    }
+    return null;
+  }
+
+  function itemLabel(item) {
+    var label = labelElement(item);
+    return (label ? label.textContent : item.textContent.replace(/\.[A-Za-z0-9]{1,10}$/, "")).trim();
+  }
+
+  /** The button that opened this menu, following submenus up (Radix: aria-labelledby → trigger). */
+  function rootTrigger(menu, doc) {
+    for (var hops = 0; menu && hops < 6; hops++) {
+      var trigger = doc.getElementById(menu.getAttribute("aria-labelledby") || "");
+      if (!trigger) return null;
+      var parent = trigger.closest('[role="menu"]');
+      if (!parent) return trigger;
+      menu = parent;
+    }
+    return null;
+  }
+
+  /** Copies Outline's item (so it looks the same) with our label, our file hint and our link. */
   function makeItem(anchor, item, win) {
     var node = anchor.cloneNode(true);
     node.setAttribute(MARK, "");
     node.removeAttribute("id");
     node.removeAttribute("data-highlighted");
-    var walker = win.document.createTreeWalker(node, 4);
-    var anchorText = anchor.textContent.trim();
-    var text;
-    while ((text = walker.nextNode())) {
-      if (text.nodeValue.trim() === anchorText) {
-        text.nodeValue = item.label;
-        break;
-      }
-    }
-    if (node.textContent.trim() !== item.label) node.textContent = item.label;
+    var label = labelElement(node);
+    if (label) label.textContent = item.label;
+    else node.textContent = item.label;
+    var hint = shortcutElement(node);
+    if (hint) hint.textContent = item.href.slice(item.href.lastIndexOf("."));
     node.addEventListener("click", function (event) {
       event.preventDefault();
       event.stopPropagation();
@@ -71,13 +98,17 @@
   function decorate(win) {
     var target = routeTarget(win.location.pathname);
     if (!target) return;
-    var menus = win.document.querySelectorAll('[role="menu"]');
+    var doc = win.document;
+    var menus = doc.querySelectorAll('[role="menu"]');
     for (var m = 0; m < menus.length; m++) {
       var menu = menus[m];
       if (menu.querySelector("[" + MARK + "]")) continue;
+      // Only the page's or collection's own menu: one opened from the sidebar may belong to another item.
+      var trigger = rootTrigger(menu, doc);
+      if (!trigger || trigger.closest("#sidebar")) continue;
       var items = menu.querySelectorAll('[role="menuitem"]');
       var texts = [];
-      for (var i = 0; i < items.length; i++) texts.push(items[i].textContent.trim());
+      for (var i = 0; i < items.length; i++) texts.push(itemLabel(items[i]));
       var at = findAnchor(texts, target);
       if (at === -1) continue;
       var anchor = items[at];
@@ -99,7 +130,7 @@
   }
 
   if (typeof module === "object" && module.exports) {
-    module.exports = { routeTarget: routeTarget, exportItems: exportItems, findAnchor: findAnchor, start: start };
+    module.exports = { routeTarget: routeTarget, exportItems: exportItems, findAnchor: findAnchor, decorate: decorate, start: start };
   } else if (document.body) {
     start(window);
   } else {
