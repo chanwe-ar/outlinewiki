@@ -1152,7 +1152,6 @@
   "You signed in with {{ authProviderName }} last time.": "You signed in with {{ authProviderName }} last time.",
   "Or": "Or",
   "Already have an account? Go to <1>login</1>.": "Already have an account? Go to <1>login</1>.",
-  "Terms and conditions": "Terms and conditions",
   "An error occurred": "An error occurred",
   "The OAuth client could not be found, please check the provided client ID": "The OAuth client could not be found, please check the provided client ID",
   "The OAuth client could not be loaded, please check the redirect URI is valid": "The OAuth client could not be loaded, please check the redirect URI is valid",
