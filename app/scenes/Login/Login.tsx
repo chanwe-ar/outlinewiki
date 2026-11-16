@@ -413,15 +413,6 @@ function Login({ children, onBack }: Props) {
             </Trans>
           </Note>
         )}
-        <Note>
-          <a
-            href="https://chanwe.ar/es/terminos"
-            target="_blank"
-            rel="noopener"
-          >
-            {t("Terms and conditions")}
-          </a>
-        </Note>
       </Centered>
     </Background>
   );

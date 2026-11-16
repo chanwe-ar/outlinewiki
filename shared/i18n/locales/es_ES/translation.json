@@ -1152,7 +1152,6 @@
   "You signed in with {{ authProviderName }} last time.": "Iniciaste sesión con {{ authProviderName }} la última vez.",
   "Or": "O",
   "Already have an account? Go to <1>login</1>.": "¿Ya tienes una cuenta? Ve a <1>iniciar sesión</1>.",
-  "Terms and conditions": "Términos y condiciones",
   "An error occurred": "Ha ocurrido un error",
   "The OAuth client could not be found, please check the provided client ID": "El cliente OAuth no pudo ser encontrado, por favor compruebe el ID del cliente proporcionado",
   "The OAuth client could not be loaded, please check the redirect URI is valid": "El cliente OAuth no pudo ser cargado, por favor compruebe que la URI de redirección es válida",
