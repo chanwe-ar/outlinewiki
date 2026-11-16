@@ -5,6 +5,11 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+- robots.txt carries CHANWE's policy (`docker/chanwe-robots.cjs`, run by the Dockerfile): `Content-Signal: search=yes,
+  ai-input=yes, ai-train=no` and a `Disallow: /` group for 28 AI-training and SEO-scraper crawlers; Outline's own rules
+  stay. The first attempt edited `server/` and `app/`, which the image never builds, and was reverted; the terms link
+  on sign-in comes from CHANWE Identity's footer.
+
 ## 2026-11-15 · Export menu (Publish Render), Umami identify, kit 1.1 brand copies
 
 - Export: `static/chanwe-export.js` adds «PDF (memo CHANWE)» to a page's download menu and «Markdown (un archivo)» /

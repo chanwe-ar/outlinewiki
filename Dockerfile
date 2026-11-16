@@ -23,4 +23,8 @@ RUN node docker/brand-outline.cjs \
   && node docker/precompress-assets.cjs build/app \
   && chown -R nodejs:nodejs build/app
 
+# CHANWE robots policy: no AI training or scraper crawlers (terms section 4).
+COPY --chown=nodejs:nodejs docker/chanwe-robots.cjs ./docker/
+RUN node docker/chanwe-robots.cjs
+
 USER nodejs
