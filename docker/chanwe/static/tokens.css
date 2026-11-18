@@ -1,4 +1,4 @@
-/* Generated from brand/tokens/tokens.json by scripts/brand-tokens.mjs. Do not edit; change tokens.json and run npm run brand:tokens. */
+/* Generated from brand/ui/tokens/tokens.json by scripts/brand-tokens.mjs. Do not edit; change tokens.json and run npm run brand:tokens. */
 :root {
   --cw-brand-primary: #FD3810;
   --cw-brand-primary-text: #FD3810;

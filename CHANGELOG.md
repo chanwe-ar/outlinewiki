@@ -5,6 +5,10 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+- Brand copies synced from chanwe-brandbook 2.2.0 (`pnpm brand:sync`), the CHANWE v2 drawings this repo had not received
+  yet: the Wiki app icon and favicons (`docker/chanwe/images/`, `static/wiki.svg`, `static/favicon-32.png`), the
+  wordmark (`static/chanwe-logo.svg`), and `static/tokens.css` (only its comment: the kit's new tokens path).
+
 - robots.txt carries CHANWE's policy (`docker/chanwe-robots.cjs`, run by the Dockerfile): `Content-Signal: search=yes,
   ai-input=yes, ai-train=no` and a `Disallow: /` group for 28 AI-training and SEO-scraper crawlers; Outline's own rules
   stay. The first attempt edited `server/` and `app/`, which the image never builds, and was reverted; the terms link
