@@ -5,6 +5,8 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+- Brand copies from chanwe-brandbook 2.3.0 (`pnpm brand:sync`): `docker/chanwe/static/tokens.css` gains the new tokens (the dot field `dots.*`, `favorite`, the content elements' `callout`, `eyebrow`, `code`, `syntax`); nothing the Wiki draws changes.
+
 - Brand copies synced from chanwe-brandbook 2.2.0 (`pnpm brand:sync`), the CHANWE v2 drawings this repo had not received
   yet: the Wiki app icon and favicons (`docker/chanwe/images/`, `static/wiki.svg`, `static/favicon-32.png`), the
   wordmark (`static/chanwe-logo.svg`), and `static/tokens.css` (only its comment: the kit's new tokens path).
