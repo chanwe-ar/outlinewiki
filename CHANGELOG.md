@@ -5,6 +5,8 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+- Docs: merging no longer deploys; deploys are by hand (S24, chanwe-proxmox-server, 2026-11-23).
+
 - Brand copies from chanwe-brandbook 2.3.0 (`pnpm brand:sync`): `docker/chanwe/static/tokens.css` gains the new tokens (the dot field `dots.*`, `favorite`, the content elements' `callout`, `eyebrow`, `code`, `syntax`); nothing the Wiki draws changes.
 
 - Brand copies synced from chanwe-brandbook 2.2.0 (`pnpm brand:sync`), the CHANWE v2 drawings this repo had not received
