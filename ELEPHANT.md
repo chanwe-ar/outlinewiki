@@ -7,3 +7,4 @@ One dated line per decision, trap or new way of working. `[!!]` = everyone must 
 2026-11-15 19:03 : chanwe-export.js reads Outline 1.12 menu items by their MenuLabel (the item text carries a ".md"/".html" hint) and ignores menus opened from #sidebar; its DOM test needs jsdom on NODE_PATH — @alejandro.abraham
 2026-11-15 19:03 : Deploying the Wiki is `ssh apps chanwe-update --infra outline --rebuild`; plain `--infra outline` only refreshes base images and leaves /srv/src/outline where it was — @alejandro.abraham
 2026-11-15 19:03 : gh in this fork defaults to upstream outline/outline: pass --repo chanwe-ar/outlinewiki (or keep `gh repo set-default`) for every PR — @alejandro.abraham
+[!!] 2026-11-23 10:25 : No auto deployment (S24): merging deploys nothing; deploy by hand once per round with ssh apps chanwe-update --deploy (the Wiki still needs chanwe-update --infra outline --rebuild) — @alejandro.abraham

@@ -93,7 +93,8 @@ Espacios», and a hard reload shows the new look.
 ## Deploy
 
 Outline is an infrastructure stack on the home server (`INFRA` in `chanwe-proxmox-server/stacks/ops/lib/common.sh`), so
-the 5-minute deploy timer does not pick up merges here. After the merge to `main`:
+the round's `chanwe-update --deploy` does not deploy it either (merging deploys nothing since S24, 2026-11-23). After the
+merge to `main`:
 
 ```bash
 ssh apps chanwe-update --infra outline --rebuild
