@@ -32,13 +32,16 @@ Work on a branch, merge to `main` with a note under `## Unreleased` in `CHANGELO
 ### Theme colours inside Outline
 
 Outline styles through styled-components, so colours are rewritten in its compiled theme chunk by `THEME` in
-`docker/brand-outline.cjs` (pairs `[upstream value, CHANWE value]`). Add or change a pair, rebuild, check. If the build
+`docker/brand-outline.cjs` (pairs `[upstream value, CHANWE value]`); every CHANWE value is read from
+`docker/chanwe/tokens.json`, the brandbook's tokens (a `brand:sync` copy, D-0060), never typed here. Add or change a pair,
+rebuild, check. If the build
 says `Unexpected Outline … theme`, the upstream value changed: look it up in the release's theme chunk and update the
 left side.
 
 ### CSS and the sidebar row
 
-`docker/chanwe/static/chanwe-outline.css` (fonts, headings, the Espacios row) and `chanwe-outline.js` (the row and
+`docker/chanwe/static/chanwe-outline.css` (fonts, headings, the Espacios row; written in chanwe-brandbook as
+`brand/ui/apps/wiki.css` and copied here by its `brand:sync`: change it there) and `chanwe-outline.js` (the row and
 lifting the veil). Their file names are hashed into `/static/chanwe-<hash>/` at build, so browsers fetch the new copy.
 
 ### Identity check
@@ -83,7 +86,7 @@ Before merging:
 docker build -t chanwe/outline:local .                     # every patch matched
 docker run --rm -v "$PWD/docker:/opt/outline/chanwe-test:ro" --entrypoint node chanwe/outline:local \
   --test chanwe-test/oidc-identity-profile.test.cjs chanwe-test/oidc-pkce-store.test.cjs \
-  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs
+  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs chanwe-test/chanwe-brand.test.cjs
 docker compose -f docker/compose.local.yml up --build      # look at http://localhost:3000
 ```
 

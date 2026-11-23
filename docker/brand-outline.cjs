@@ -46,39 +46,45 @@ const shortHash = (...parts) => {
   return hash.digest("hex").slice(0, 10);
 };
 
-// 1. Theme. Values are brand/tokens/tokens.json roles.
+// 1. Theme. Every value is read from the brandbook's tokens.json (docker/chanwe/tokens.json, a copy its brand:sync
+// writes; never edit it here), so a brand change reaches the wiki on the next image build.
+const TOKENS = JSON.parse(fs.readFileSync(path.resolve("docker/chanwe/tokens.json"), "utf8"));
+const P = TOKENS.color.palette;
+const D = { ...P, ...TOKENS.color.dark };
+const rgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(", ");
+const darkTint = (alpha) => `rgba(${rgb(D["ink-fg"])}, ${alpha})`;
 const THEME = [
-  ["accent:`#0366d6`", "accent:`#FD3810`"], // primary
+  ["accent:`#0366d6`", `accent:\`${P.primary}\``], // primary
   [
     "fontFamily:`-apple-system, BlinkMacSystemFont, Inter, 'Segoe UI', Roboto, Oxygen, sans-serif`",
-    "fontFamily:`Satoshi, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif`",
+    `fontFamily:\`${TOKENS.font.body.family}, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif\``,
   ],
   [
     "fontFamilyMono:`'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace`",
-    "fontFamilyMono:`'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace`",
+    `fontFamilyMono:\`'${TOKENS.font.mono.family}', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace\``,
   ],
-  ["slate:`#66778F`", "slate:`#64748B`"], // ink-fg
-  ["slateLight:`#DAE1E9`", "slateLight:`#E2E8F0`"], // rule
-  ["slateDark:`#394351`", "slateDark:`#475569`"], // body-fg
-  ["smoke:`#F4F7FA`", "smoke:`#F1F5F9`"], // surface-sunken
-  ["smokeLight:`#F9FBFC`", "smokeLight:`#F8FAFC`"], // paper
-  ["warmGrey:`hsl(212 31% 95% / 1)`", "warmGrey:`#F1F5F9`"], // surface-sunken
+  ["slate:`#66778F`", `slate:\`${P["ink-fg"]}\``],
+  ["slateLight:`#DAE1E9`", `slateLight:\`${P.rule}\``],
+  ["slateDark:`#394351`", `slateDark:\`${P["body-fg"]}\``],
+  ["smoke:`#F4F7FA`", `smoke:\`${P["surface-sunken"]}\``],
+  ["smokeLight:`#F9FBFC`", `smokeLight:\`${P.paper}\``],
+  ["warmGrey:`hsl(212 31% 95% / 1)`", `warmGrey:\`${P["surface-sunken"]}\``],
   // CHANWE v2 (brandbook brand-v2.md §2, §6, §7): the light theme's sidebar
   // takes the dark theme's look, the kit's dark canvas (ink-light), slate-white
   // text, hover and active a light tint with white text, never an orange fill.
-  ["sidebarBackground:`hsl(212 31% 95% / 1)`", "sidebarBackground:`#232A35`"], // ink-light (dark canvas)
-  ["sidebarHoverBackground:`hsl(212 31% 90% / 1)`", "sidebarHoverBackground:`rgba(148, 163, 184, 0.12)`"], // dark tint
-  ["sidebarActiveBackground:`hsl(212 31% 85% / 1)`", "sidebarActiveBackground:`rgba(148, 163, 184, 0.19)`"], // dark tint-strong
-  ["sidebarControlHoverBackground:`rgb(138 164 193 / 20%)`", "sidebarControlHoverBackground:`rgba(148, 163, 184, 0.12)`"], // dark tint
-  ["sidebarDraftBorder:`hsl(212 31% 75% / 1)`", "sidebarDraftBorder:`rgba(148, 163, 184, 0.35)`"],
-  ["sidebarText:`rgb(78, 92, 110)`", "sidebarText:`#C3CAD4`"], // dark fg-muted
-  ["link:`#137FFB`", "link:`#FD3810`"], // dark theme links
+  ["sidebarBackground:`hsl(212 31% 95% / 1)`", `sidebarBackground:\`${P["ink-light"]}\``], // ink-light (dark canvas)
+  ["sidebarHoverBackground:`hsl(212 31% 90% / 1)`", `sidebarHoverBackground:\`${darkTint(0.12)}\``], // dark tint
+  ["sidebarActiveBackground:`hsl(212 31% 85% / 1)`", `sidebarActiveBackground:\`${darkTint(0.19)}\``], // dark tint-strong
+  ["sidebarControlHoverBackground:`rgb(138 164 193 / 20%)`", `sidebarControlHoverBackground:\`${darkTint(0.12)}\``], // dark tint
+  ["sidebarDraftBorder:`hsl(212 31% 75% / 1)`", `sidebarDraftBorder:\`${darkTint(0.35)}\``],
+  ["sidebarText:`rgb(78, 92, 110)`", `sidebarText:\`${D["fg-muted"]}\``], // dark fg-muted
+  ["link:`#137FFB`", `link:\`${P.primary}\``], // dark theme links
   // Light code highlighting in the brand code roles.
-  ["codeKeyword:`#00009f`", "codeKeyword:`#FD3810`"],
-  ["codeString:`#a31515`", "codeString:`#15803D`"],
-  ["codeNumber:`#0550ae`", "codeNumber:`#7C3AED`"],
-  ["codeComment:`#008000`", "codeComment:`#928D86`"],
-  ["codeFunction:`#393A34`", "codeFunction:`#475569`"],
+  ["codeKeyword:`#00009f`", `codeKeyword:\`${P["code-keyword"]}\``],
+  ["codeString:`#a31515`", `codeString:\`${P["code-string"]}\``],
+  ["codeNumber:`#0550ae`", `codeNumber:\`${P["code-number"]}\``],
+  ["codeComment:`#008000`", `codeComment:\`${P["code-comment"]}\``],
+  ["codeFunction:`#393A34`", `codeFunction:\`${P["code-function"]}\``],
 ];
 
 const assetsDir = path.join(APP, "assets");

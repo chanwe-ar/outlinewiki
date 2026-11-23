@@ -32,13 +32,15 @@ Trabajá en una rama, mergeá a `main` con una nota bajo `## Unreleased` en `CHA
 ### Colores del tema de Outline
 
 Outline estiliza con styled-components, así que los colores se reescriben en el chunk compilado del tema con `THEME`
-de `docker/brand-outline.cjs` (pares `[valor de upstream, valor de CHANWE]`). Agregá o cambiá un par, reconstruí y
-revisá. Si el build dice `Unexpected Outline … theme`, cambió el valor de upstream: buscalo en el chunk del tema de la
+de `docker/brand-outline.cjs` (pares `[valor de upstream, valor de CHANWE]`); cada valor de CHANWE se lee de
+`docker/chanwe/tokens.json`, los tokens del brandbook (una copia de `brand:sync`, D-0060), nunca se escribe acá. Agregá
+o cambiá un par, reconstruí y revisá. Si el build dice `Unexpected Outline … theme`, cambió el valor de upstream: buscalo en el chunk del tema de la
 versión nueva y actualizá el lado izquierdo.
 
 ### CSS y la fila del sidebar
 
-`docker/chanwe/static/chanwe-outline.css` (fuentes, títulos, la fila de Espacios) y `chanwe-outline.js` (la fila y
+`docker/chanwe/static/chanwe-outline.css` (fuentes, títulos, la fila de Espacios; se escribe en chanwe-brandbook como
+`brand/ui/apps/wiki.css` y su `brand:sync` la copia acá: se cambia allá) y `chanwe-outline.js` (la fila y
 levantar el velo). Se publican bajo `/static/chanwe-<hash>/`, con un hash del contenido, así que el navegador baja la
 copia nueva.
 
@@ -86,7 +88,7 @@ Antes de mergear:
 docker build -t chanwe/outline:local .                     # todos los parches coincidieron
 docker run --rm -v "$PWD/docker:/opt/outline/chanwe-test:ro" --entrypoint node chanwe/outline:local \
   --test chanwe-test/oidc-identity-profile.test.cjs chanwe-test/oidc-pkce-store.test.cjs \
-  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs
+  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs chanwe-test/chanwe-brand.test.cjs
 docker compose -f docker/compose.local.yml up --build      # mirá http://localhost:3000
 ```
 
