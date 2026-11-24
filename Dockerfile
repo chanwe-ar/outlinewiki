@@ -17,6 +17,7 @@ RUN node docker/configure-outline-release.cjs
 # CHANWE brand (chanwe-brandbook): theme colours and fonts, the app veil, the
 # "Volver a CHANWE Espacios" sidebar entry and the Wiki app icon.
 COPY --chown=nodejs:nodejs docker/brand-outline.cjs docker/precompress-assets.cjs ./docker/
+COPY --chown=nodejs:nodejs docker/chanwe/tokens.json ./docker/chanwe/tokens.json
 COPY --chown=nodejs:nodejs docker/chanwe/static ./docker/chanwe/static
 COPY --chown=nodejs:nodejs docker/chanwe/images/ ./public/images/
 RUN node docker/brand-outline.cjs \

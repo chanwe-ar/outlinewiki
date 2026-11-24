@@ -5,6 +5,16 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+## 2026-11-23 · the look from chanwe-brandbook (D-0060), theme values from tokens.json, signal tokens
+
+- Brand copies from chanwe-brandbook (D-0062, 2026-11-23): the tokens gain `signal-{ok,warn,fail,plan}` and their `-bg` washes (light and dark), for screens that show a live system's state; nothing else changes.
+
+- The look is written in chanwe-brandbook (D-0060): `docker/chanwe/static/chanwe-outline.css` is a copy of its
+  `brand/ui/apps/wiki.css`, and Outline's theme patch (`docker/brand-outline.cjs`) reads every CHANWE value from
+  `docker/chanwe/tokens.json`, the brandbook's tokens, copied by its `brand:sync` (the Dockerfile copies it in). The
+  patched theme is the same, value for value (21 of 21); the stylesheet gains only a first line naming its source.
+  `docker/chanwe-brand.test.cjs` fails on another stylesheet, a copy without that line, or a literal colour in the theme.
+
 - Docs: merging no longer deploys; deploys are by hand (S24, chanwe-proxmox-server, 2026-11-23).
 
 - Brand copies from chanwe-brandbook 2.3.0 (`pnpm brand:sync`): `docker/chanwe/static/tokens.css` gains the new tokens (the dot field `dots.*`, `favorite`, the content elements' `callout`, `eyebrow`, `code`, `syntax`); nothing the Wiki draws changes.
