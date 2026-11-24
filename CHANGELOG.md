@@ -5,6 +5,8 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+- The brand guard (`docker/chanwe-brand.test.cjs`) checks all of `docker/` and the tokens' header, and is in every list of tests to run before merging (`start_here.md` left it out; the guide's list gains the export test too).
+
 ## 2026-11-23 · the look from chanwe-brandbook (D-0060), theme values from tokens.json, signal tokens
 
 - Brand copies from chanwe-brandbook (D-0062, 2026-11-23): the tokens gain `signal-{ok,warn,fail,plan}` and their `-bg` washes (light and dark), for screens that show a live system's state; nothing else changes.

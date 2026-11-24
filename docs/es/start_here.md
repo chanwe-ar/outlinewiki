@@ -68,14 +68,16 @@ Tests del adaptador de Identity (el test runner de Node; necesitan `jsonwebtoken
 ```bash
 docker run --rm -v "$PWD/docker:/opt/outline/chanwe-test:ro" --entrypoint node chanwe/outline:local \
   --test chanwe-test/oidc-identity-profile.test.cjs chanwe-test/oidc-pkce-store.test.cjs \
-  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs chanwe-test/chanwe-export.test.cjs
+  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs chanwe-test/chanwe-export.test.cjs \
+  chanwe-test/chanwe-brand.test.cjs
 ```
 
 Sin Docker sirve cualquier carpeta con `jsonwebtoken` 9 instalado (probado el 2026-11-03, pasan los 30 tests):
 
 ```bash
 NODE_PATH=/ruta/a/node_modules node --test docker/oidc-identity-profile.test.cjs docker/oidc-pkce-store.test.cjs \
-  docker/chanwe-subject.test.cjs docker/chanwe-umami.test.cjs docker/chanwe-export.test.cjs
+  docker/chanwe-subject.test.cjs docker/chanwe-umami.test.cjs docker/chanwe-export.test.cjs \
+  docker/chanwe-brand.test.cjs
 ```
 
 La prueba del menú de exportar contra el DOM real de Outline (`docker/chanwe-export.dom.test.cjs`) necesita además

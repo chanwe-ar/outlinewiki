@@ -86,7 +86,8 @@ Before merging:
 docker build -t chanwe/outline:local .                     # every patch matched
 docker run --rm -v "$PWD/docker:/opt/outline/chanwe-test:ro" --entrypoint node chanwe/outline:local \
   --test chanwe-test/oidc-identity-profile.test.cjs chanwe-test/oidc-pkce-store.test.cjs \
-  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs chanwe-test/chanwe-brand.test.cjs
+  chanwe-test/chanwe-subject.test.cjs chanwe-test/chanwe-umami.test.cjs chanwe-test/chanwe-export.test.cjs \
+  chanwe-test/chanwe-brand.test.cjs    # the brand copies (D-0060); needs only Node: node --test docker/chanwe-brand.test.cjs
 docker compose -f docker/compose.local.yml up --build      # look at http://localhost:3000
 ```
 
