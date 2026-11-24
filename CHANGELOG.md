@@ -5,6 +5,8 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+## 2026-11-23 · the look from chanwe-brandbook (D-0060), theme values from tokens.json, signal tokens
+
 - Brand copies from chanwe-brandbook (D-0062, 2026-11-23): the tokens gain `signal-{ok,warn,fail,plan}` and their `-bg` washes (light and dark), for screens that show a live system's state; nothing else changes.
 
 - The look is written in chanwe-brandbook (D-0060): `docker/chanwe/static/chanwe-outline.css` is a copy of its
