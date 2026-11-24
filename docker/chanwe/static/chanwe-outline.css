@@ -253,7 +253,7 @@ html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after 
 }
 #root [role="main"] input:is([type="text"], [type="search"], [type="email"], [type="url"], :not([type])):not(.ProseMirror *),
 [role="dialog"] input:is([type="text"], [type="search"], [type="email"], [type="url"], :not([type])) {
-  padding-inline: 12px;
+  padding-inline: var(--cw-brand-space-sm);
 }
 #root [role="main"] textarea,
 [role="dialog"] textarea {
@@ -286,7 +286,7 @@ html[data-cw-theme="light"] [role="main"] > div > div:first-child[class]::after 
   display: block;
   width: 88px;
   height: 18px;
-  margin-inline-start: 4px;
+  margin-inline-start: var(--cw-brand-space-2xs);
   background: currentColor;
   -webkit-mask: url("./chanwe-logo.svg") left center / contain no-repeat;
   mask: url("./chanwe-logo.svg") left center / contain no-repeat;
