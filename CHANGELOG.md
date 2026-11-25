@@ -5,6 +5,8 @@ Outline's own changes are in its releases: https://github.com/outline/outline/re
 
 ## Unreleased
 
+- The CHANWE logo with the trimmed h (brandbook D-0086, Ale 2026-11-25): the logo files are the brandbook's copies again (`brand:sync`).
+
 - Brand copies from chanwe-brandbook (2026-11-24): the theme reads brand tokens where the value is the same, and the account link takes the brand orange (it fell back to an off-brand one).
 
 - The brand guard (`docker/chanwe-brand.test.cjs`) checks all of `docker/` and the tokens' header, and is in every list of tests to run before merging (`start_here.md` left it out; the guide's list gains the export test too).
